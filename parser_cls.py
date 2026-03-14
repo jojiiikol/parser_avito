@@ -131,8 +131,9 @@ class AvitoParse:
 
                 self.notifier.notify_many(ads=filter_ads)
 
-                # Просмотры
-                filter_ads = self.parse_views(ads=filter_ads)
+                # Глубокий парсинг
+                filter_ads = self.deep_parse(ads=filter_ads)
+
 
                 # Телефоны
                 filter_ads = self.parse_phone(ads=filter_ads)
@@ -203,7 +204,7 @@ class AvitoParse:
             )
         return ads
 
-    def parse_views(self, ads: list[Item]) -> list[Item]:
+    def deep_parse(self, ads: list[Item]) -> list[Item]:
         if not self.config.parse_views:
             return ads
 
@@ -222,6 +223,7 @@ class AvitoParse:
                 continue
 
         return ads
+
 
     def parse_phone(self, ads: list[Item]) -> list[Item]:
         if not self.config.parse_phone or self.config.parse_phone:

@@ -1,8 +1,11 @@
+import os
+
+from dotenv import load_dotenv
 from loguru import logger
 
 from dto import AvitoConfig
 from .proxy import NoProxy, ServerProxy, MobileProxy, Proxy
-
+load_dotenv()
 
 def build_proxy(config: AvitoConfig) -> Proxy:
     """
@@ -17,7 +20,7 @@ def build_proxy(config: AvitoConfig) -> Proxy:
 
     if config.proxy_string:
         logger.info("Прокси определен как серверный")
-        return ServerProxy(config.proxy_string)
+        return ServerProxy(os.getenv("PROXY_URL"))
 
     return NoProxy()
 
