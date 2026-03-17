@@ -1,3 +1,4 @@
+import asyncio
 import html
 import json
 import random
@@ -6,8 +7,11 @@ import time
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
+import playwright
 from bs4 import BeautifulSoup
 from loguru import logger
+from playwright.async_api import async_playwright
+from playwright.sync_api import Playwright, sync_playwright
 from pydantic import ValidationError
 
 from common_data import HEADERS
@@ -17,12 +21,14 @@ from filters.ads_filter import AdsFilter
 from hide_private_data import log_config
 from integrations.notifications.factory import build_notifier
 from load_config import load_avito_config
-from models import ItemsResponse, Item
+from models import ItemsResponse, Item, Review, AnswerOnReview
 from parser.cookies.factory import build_cookies_provider
 from parser.export.factory import build_result_storage
+from parser.http.aioclient import AioHttpClient
 from parser.http.client import HttpClient
 from parser.proxies.proxy_factory import build_proxy
 from utils.parse_phone import ParsePhone
+from utils.remove_emojies import remove_emojis
 from version import VERSION
 
 DEBUG_MODE = False
@@ -46,7 +52,7 @@ class AvitoParse:
         self.headers = HEADERS
         self.good_request_count = 0
         self.bad_request_count = 0
-        self.http = HttpClient(
+        self.http = AioHttpClient(
             proxy=self.proxy,
             cookies=self.cookies_provider,
             timeout=20,
@@ -65,12 +71,12 @@ class AvitoParse:
         logger.info("Работаем без прокси")
         return None
 
-    def fetch_data(self, url: str) -> str | None:
+    async def fetch_data(self, url: str) -> str | None:
         if self.stop_event and self.stop_event.is_set():
             return None
 
         try:
-            response = self.http.request("GET", url)
+            response = await self.http.request("GET", url)
             self.good_request_count += 1
             return response.text
 
@@ -79,7 +85,7 @@ class AvitoParse:
             logger.warning(f"Ошибка при запросе {url}: {err}")
             return None
 
-    def parse(self):
+    async def parse(self):
         if not self.config.one_file_for_link:
             # один storage на весь парсинг
             self.result_storage = build_result_storage(config=self.config)
@@ -92,15 +98,16 @@ class AvitoParse:
                     config=self.config,
                     link_index=_index
                 )
-            ads_in_link = []
+
             for i in range(0, self.config.count):
+                ads_in_link = []
                 logger.info(f"page={i + 1}")
                 if self.stop_event and self.stop_event.is_set():
                     return
                 if DEBUG_MODE:
                     html_code = open("may.txt", "r", encoding="utf-8").read()
                 else:
-                    html_code = self.fetch_data(url=url)
+                    html_code = await self.fetch_data(url=url)
 
                 if not html_code:
                     logger.warning(
@@ -132,7 +139,7 @@ class AvitoParse:
                 self.notifier.notify_many(ads=filter_ads)
 
                 # Глубокий парсинг
-                filter_ads = self.deep_parse(ads=filter_ads)
+                filter_ads = await self.deep_parse(ads=filter_ads)
 
 
                 # Телефоны
@@ -147,11 +154,11 @@ class AvitoParse:
                 logger.info(f"Пауза {self.config.pause_between_links} сек.")
                 time.sleep(self.config.pause_between_links)
 
-            if ads_in_link:
-                logger.info(f"Сохраняю {len(ads_in_link)} объявлений")
-                self.result_storage.save(ads_in_link)
-            else:
-                logger.info("Сохранять нечего")
+                if ads_in_link:
+                    logger.info(f"Сохраняю {len(ads_in_link)} объявлений")
+                    self.result_storage.save(ads_in_link)
+                else:
+                    logger.info("Сохранять нечего")
 
         logger.info(f"Хорошие запросы: {self.good_request_count}шт, плохие: {self.bad_request_count}шт")
 
@@ -184,6 +191,27 @@ class AvitoParse:
             logger.error(f"Ошибка при поиске информации на странице: {err}")
         return {}
 
+    def find_json_on_ad_page(self, html_code: str) -> dict:
+        html_code = BeautifulSoup(html_code, "html.parser")
+        try:
+            for _script in html_code.select('script'):
+                if not "loaderData" in _script.text:
+                    continue
+
+                json_text = _script.text
+                json_text = json_text.replace("window.__staticRouterHydrationData = JSON.parse(", "")
+                json_text = json_text[:len(json_text) - 2]
+
+                json_text = json.loads(json_text)
+                json_text = json.loads(json_text)
+
+                main_data = json_text.get("loaderData", {}).get("catalog-or-main-or-item", {}).get("buyerItem", {})
+                return main_data
+
+            return {}
+        except Exception as err:
+            logger.error(f"Ошибка при получении json со страницы объявления")
+        return {}
 
     def filter_ads(self, ads: list[Item]) -> list[Item]:
         return self.ads_filter.apply(ads)
@@ -204,7 +232,7 @@ class AvitoParse:
             )
         return ads
 
-    def deep_parse(self, ads: list[Item]) -> list[Item]:
+    async def deep_parse(self, ads: list[Item]) -> list[Item]:
         if not self.config.parse_views:
             return ads
 
@@ -212,10 +240,17 @@ class AvitoParse:
 
         for ad in ads:
             try:
-                html_code_full_page = self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
+                html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
                 if not html_code_full_page:
                     continue
+                ad_json = self.find_json_on_ad_page(html_code_full_page)
+
                 ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
+                ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
+                ad.score = self._extract_score(ad_json=ad_json)
+                ad.reviews = await self._extract_reviews(ad_json=ad_json, ad=ad)
+                ad.category.specification = self._extract_specification(ad_json=ad_json)
+
                 delay = random.uniform(0.1, 0.9)
                 time.sleep(delay)
             except Exception as err:
@@ -236,17 +271,94 @@ class AvitoParse:
             logger.warning(f"Ошибка при парсинге телефонов: {err}")
             return ads
 
+    def _extract_full_description(self, html_code: str, ad: Item) -> str | None:
+        try:
+            soup = BeautifulSoup(html_code, "html.parser")
+            tag = "div", {"data-marker": "item-view/item-description"}
+
+            description = soup.find(*tag)
+            cleaned_text = remove_emojis(description.text.strip())
+            return cleaned_text
+        except Exception as err:
+            logger.warning(f"Ошибка при получении полного описания: {err}")
+            return ad.description
+
+
+    async def _extract_reviews(self, ad_json: dict, ad: Item) -> str | None:
+        try:
+            user_key = (ad_json.get("rating", {})
+                        .get("userKey", None))
+
+            item_id = ad.id
+            title = ad.title
+
+            review_url = f"https://www.avito.ru/web/7/user/{user_key}/ratings?fromItem={item_id}"
+            response = await self.fetch_data(url=review_url)
+            json_data = json.loads(response)
+            entries = json_data.get("entries", [])
+            entries = list(filter(
+                lambda entry: entry.get("type") == "rating" and entry.get("value", {}).get("itemTitle") == title, entries
+            ))
+            reviews = []
+            for entry in entries:
+                review_entry = entry.get("value")
+                review = Review(
+                    text=review_entry.get("textSections")[0].get("text"),
+                    author=review_entry.get("title"),
+                    date = review_entry.get("rated"),
+                    score = review_entry.get("score"),
+                )
+                if answer := review_entry.get('answer'):
+                    answer = AnswerOnReview(
+                        text=answer.get("text"),
+                        author=answer.get("title")
+                    )
+                    review.answer = answer
+
+                reviews_to_text = f"Дата: {review.date}\nАвтор: {review.author}\nОтзыв: {review.text}\nОценка: {review.score}"
+                if review.answer:
+                    reviews_to_text += f"\nОтвет:{review.answer.text}"
+
+                reviews.append(reviews_to_text)
+            return "\n\n".join(reviews)
+        except Exception as err:
+            logger.warning(f"Ошибка при парсинге отзывов {err}")
+
+
+    def _extract_score(self, ad_json: dict) -> float | None:
+        try:
+            rating = ad_json.get("rating", {})
+            score = rating.get("scoreFloat", {})
+            return float(score)
+        except Exception as err:
+            logger.warning(f"Ошибка при парсинге общей оценки отзывов: {err}")
+            return None
+
     @staticmethod
-    def _extract_views(html: str) -> tuple:
-        soup = BeautifulSoup(html, "html.parser")
+    def _extract_views(html: str) -> tuple | None:
+        try:
+            soup = BeautifulSoup(html, "html.parser")
 
-        def extract_digits(element):
-            return int(''.join(filter(str.isdigit, element.get_text()))) if element else None
+            def extract_digits(element):
+                return int(''.join(filter(str.isdigit, element.get_text()))) if element else None
 
-        total = extract_digits(soup.select_one('[data-marker="item-view/total-views"]'))
-        today = extract_digits(soup.select_one('[data-marker="item-view/today-views"]'))
+            total = extract_digits(soup.select_one('[data-marker="item-view/total-views"]'))
+            today = extract_digits(soup.select_one('[data-marker="item-view/today-views"]'))
 
-        return total, today
+            return total, today
+        except Exception as err:
+            logger.warning("Ошибка при получении числа просмотров")
+            return None
+
+    def _extract_specification(self, ad_json: dict) -> str | None:
+        try:
+            categories = ad_json.get("item", {}).get("breadcrumbs", [])
+            last_category = categories[-1]
+            specification = last_category.get("title")
+            return specification
+        except Exception as err:
+            logger.warning(f"Ошибка во время парсинга категории {err}")
+            return None
 
     @staticmethod
     def _extract_seller_slug(data):
@@ -290,7 +402,7 @@ class AvitoParse:
             logger.error(f"Не смог сформировать ссылку на следующую страницу для {url}. Ошибка: {err}")
 
 
-if __name__ == "__main__":
+async def main():
     try:
         config = load_avito_config("config.toml")
     except Exception as err:
@@ -300,7 +412,7 @@ if __name__ == "__main__":
     while True:
         try:
             parser = AvitoParse(config)
-            parser.parse()
+            await parser.parse()
             if config.one_time_start:
                 logger.info("Парсинг завершен т.к. включён one_time_start в настройках")
                 break
@@ -310,3 +422,6 @@ if __name__ == "__main__":
             logger.exception(err)
             logger.error(f"Произошла ошибка {err}. Будет повторный запуск через 30 сек.")
             time.sleep(30)
+
+if __name__ == "__main__":
+    asyncio.run(main())

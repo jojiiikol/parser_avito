@@ -9,6 +9,7 @@ class Category(BaseModel):
     rootId: int
     compare: bool
     pageRootId: int | None
+    specification: str | None = None
 
 
 class Location(BaseModel):
@@ -97,6 +98,18 @@ class IvaStep(BaseModel):
     default: bool
 
 
+class AnswerOnReview(BaseModel):
+    text: str | None = None
+    author: str | None = None
+
+
+class Review(BaseModel):
+    author: str | None = None
+    text: str | None = None
+    date: str | None = None
+    score: float | None = None
+    answer: AnswerOnReview | None = None
+
 class Item(BaseModel):
     id: int | dict | None = None
     categoryId: int | dict | None = None
@@ -149,7 +162,10 @@ class Item(BaseModel):
     today_views: int | None = None
     phone: str | None = None
     reviews: str | None = None
+    score: float | None = None
 
 
 class ItemsResponse(BaseModel):
     items: List[Item]
+
+

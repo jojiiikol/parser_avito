@@ -15,6 +15,7 @@ class ExcelStorage(ResultStorage):
     """
     name = "excel"
     headers = [
+        "Категория",
         "Название",
         "Цена",
         "URL",
@@ -28,7 +29,9 @@ class ExcelStorage(ResultStorage):
         "Поднято",
         "Просмотры (всего)",
         "Просмотры (сегодня)",
-        "Телефон"
+        "Телефон",
+        "Общая оценка",
+        "Отзывы"
     ]
 
     def __init__(self, file_path: Path):
@@ -56,7 +59,7 @@ class ExcelStorage(ResultStorage):
         return (
             datetime
             .fromtimestamp(ad.sortTimeStamp / 1000, tz=get_localzone())
-            .replace(tzinfo=None)
+            .replace(tzinfo=None).strftime("%Y-%m-%d %H:%M:%S")
         )
 
     @staticmethod
@@ -105,6 +108,7 @@ class ExcelStorage(ResultStorage):
                 ]
 
                 row = [
+                    self.excel_safe(ad.category.specification or ""),
                     self.excel_safe(ad.title),
                     ad.priceDetailed.value,
                     self.excel_safe(f"https://www.avito.ru/{ad.urlPath}"),
@@ -119,6 +123,8 @@ class ExcelStorage(ResultStorage):
                     ad.total_views or "",
                     ad.today_views or "",
                     self.excel_safe(ad.phone or ""),
+                    self.excel_safe(ad.score or ""),
+                    self.excel_safe(ad.reviews or ""),
                 ]
 
                 sheet.append(row)

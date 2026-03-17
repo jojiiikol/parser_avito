@@ -4,11 +4,12 @@ from pathlib import Path
 from typing import Optional
 
 from loguru import logger
+from playwright.async_api import async_playwright
 
 from parser.cookies.base import CookiesProvider
 
 
-class OwnCookiesProvider(CookiesProvider):
+class PlaywrightCookies(CookiesProvider):
     def __init__(
             self,
             storage_path: str | Path = "storage/own_cookies.json",
@@ -78,12 +79,17 @@ class OwnCookiesProvider(CookiesProvider):
         # Сохраняем на диск
         self._save_to_disk()
 
-    def handle_block(self):
-        """
-        Ничего кроме логирования и паузы не делаем при блокировке
-        """
-        logger.warning("🚫 Блокировка с собственными cookies, ожидаем...")
-        time.sleep(self.UNBLOCK_TIMEOUT)
+    async def handle_block(self):
+        async with async_playwright() as p:
+            browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222")
+            print("Connected to CDP")
+            context = await browser.new_context()
+            page = await context.new_page()
+            await page.goto("https://www.avito.ru", wait_until="domcontentloaded", timeout=30000)
+            cookies = await context.cookies()
+            await page.close()
+            cookies = self._extract_cookies_from_response(cookies)
+            return cookies
 
     @staticmethod
     def _extract_cookies_from_response(response) -> Optional[dict]:
