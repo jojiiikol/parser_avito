@@ -109,6 +109,8 @@ class AvitoParse:
                 else:
                     html_code = await self.fetch_data(url=url)
 
+                print(html_code)
+
                 if not html_code:
                     logger.warning(
                         f"Не удалось получить HTML для {url}, пробую заново через {self.config.pause_between_links} сек.")
@@ -121,6 +123,7 @@ class AvitoParse:
                     catalog = data_from_page.get("catalog") or {}
                     ads_models = ItemsResponse(**catalog)
                 except ValidationError as err:
+                    print(data_from_page)
                     logger.error(f"При валидации объявлений произошла ошибка: {err}")
                     continue
 
@@ -243,6 +246,8 @@ class AvitoParse:
                 html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
                 if not html_code_full_page:
                     continue
+                delay = random.uniform(0.1, 0.9)
+                time.sleep(delay)
                 ad_json = self.find_json_on_ad_page(html_code_full_page)
 
                 ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)

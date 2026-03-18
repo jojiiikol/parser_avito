@@ -26,6 +26,7 @@ class PlaywrightClient:
         self.proxy = proxy
         self.proxy_split_obj = self.get_proxy_obj()
         self.headless = headless
+        self.headers = {}
         self.user_agent = user_agent or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
         self.context = self.page = self.browser = None
         self.stop_event = stop_event
@@ -72,13 +73,16 @@ class PlaywrightClient:
                             "Используй: ip:port@user:pass или ip:port:user:pass")
 
     @staticmethod
-    def parse_cookie_string(cookie_str: str) -> dict:
-        return dict(pair.split("=", 1) for pair in cookie_str.split("; ") if "=" in pair)
+    def parse_cookie_string(cookie_str: list[dict]) -> dict:
+        cookies_dict = {}
+        for cookie in cookie_str:
+            cookies_dict[cookie['name']] = cookie['value']
+        return cookies_dict
+
 
     async def launch_browser(self):
-        ensure_playwright_installed("chromium")
         stealth = Stealth()
-        self.playwright_context = stealth.use_async(async_playwright())
+        self.playwright_context = async_playwright()
         playwright = await self.playwright_context.__aenter__()
         self.playwright = playwright
 
@@ -87,10 +91,10 @@ class PlaywrightClient:
             "chromium_sandbox": False,
             "args": [
                 "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
+                "--disable-automation",
+                "--disable-infobars",
                 "--disable-dev-shm-usage",
-                "--start-maximized",
-                "--window-size=1920,1080",
+                "--disable-browser-side-navigation",
             ]
         }
 
@@ -113,29 +117,50 @@ class PlaywrightClient:
             }
 
         self.context = await self.browser.new_context(**context_args)
-        self.page = await self.context.new_page()
-        # block images, not use now
-        # await self.page.route("**/*", lambda route, request: asyncio.create_task(self._block_images(route, request)))
-        await self._stealth(self.page)
+        await self.context.clear_cookies()
+
+
+    def extract_headers(self, headers: dict):
+        cleaned = {}
+        for key, value in headers.items():
+            clean_key = key.replace('\n', '').replace('\r', '').strip()
+            if not clean_key:
+                continue
+
+            if isinstance(value, str):
+                clean_value = value.replace('\n', '').replace('\r', '').strip()
+                if clean_value:
+                    cleaned[clean_key] = clean_value
+            else:
+                cleaned[clean_key] = value
+
+        self.headers = cleaned
 
     async def load_page(self, url: str):
-        await self.page.goto(url=url,
-                             timeout=60_000,
-                             wait_until="domcontentloaded")
-
         for attempt in range(10):
-            if self.stop_event and self.stop_event.is_set():
-                return {}
-            await self.check_block(self.page, self.context)
-            raw_cookie = await self.page.evaluate("() => document.cookie")
-            cookie_dict = self.parse_cookie_string(raw_cookie)
-            if cookie_dict.get("ft"):
-                logger.info("Cookies получены")
-                return cookie_dict
-            await asyncio.sleep(5)
-
-        logger.warning("Не удалось получить cookies")
+            self.page = await self.context.new_page()
+            try:
+                await self.page.goto(url=url,
+                                     timeout=100000,
+                                     wait_until="domcontentloaded")
+                if self.stop_event and self.stop_event.is_set():
+                    await self.page.close()
+                    return {}
+                await self.page.wait_for_selector('[data-marker="search-form/logo"]', timeout=5000)
+                self.page.on("request", lambda request: self.extract_headers(request.headers))
+                cookies = await self.context.cookies()
+                cookie_dict = self.parse_cookie_string(cookies)
+                if cookie_dict.get("ft"):
+                    logger.info("Cookies получены")
+                    await self.page.close()
+                    return cookie_dict
+            except Exception as err:
+                await self.page.close()
+                delay = random.randint(60, 180)
+                logger.warning(f"Не удалось получить cookies, повторяю операцию через {delay} секунд. Попытка {attempt+1}/{10}")
+                await asyncio.sleep(delay)
         return {}
+
 
     async def extract_cookies(self, url: str) -> dict:
         try:
@@ -153,22 +178,12 @@ class PlaywrightClient:
     async def get_cookies(self, url: str) -> dict:
         return await self.extract_cookies(url)
 
-    async def check_block(self, page, context):
-        title = await page.title()
-        logger.info(f"Не ошибка, а название страницы: {title}")
-        if BAD_IP_TITLE in str(title).lower():
-            logger.info("IP заблокирован")
-            await context.clear_cookies()
-            await self.change_ip()
-            await page.reload(timeout=60 * 1000)
+
 
     async def change_ip(self, retries: int = MAX_RETRIES):
         if not self.proxy_split_obj:
             logger.info("Сейчас бы сменили ip, но прокси нет - поэтому ждем")
-            for i in range(RETRY_DELAY_WITHOUT_PROXY):
-                if self.stop_event and self.stop_event.is_set():
-                    return False
-                await asyncio.sleep(1)
+            # await asyncio.sleep(random.uniform(60, 60))
             return False
         for attempt in range(1, retries + 1):
             try:
@@ -214,6 +229,5 @@ async def get_cookies(proxy: Proxy = None, headless: bool = True, stop_event=Non
         headless=headless,
         stop_event=stop_event
     )
-    ads_id = str(random.randint(1111111111, 9999999999))
-    cookies = await client.get_cookies(f"https://www.avito.ru/{ads_id}")
-    return cookies, client.user_agent
+    cookies = await client.get_cookies(f"https://www.avito.ru/")
+    return cookies, client.headers, client.user_agent

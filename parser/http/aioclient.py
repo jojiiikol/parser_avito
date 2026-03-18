@@ -2,7 +2,9 @@
 Клиент для запросов парсера
 """
 import asyncio
+import random
 import time
+from http.cookies import SimpleCookie
 
 import aiohttp
 import httpx
@@ -10,6 +12,7 @@ from aiohttp import ClientTimeout
 from loguru import logger
 
 from parser.cookies.base import CookiesProvider
+from parser.cookies.own_cookies import OwnCookiesProvider
 from parser.cookies.playwright_cookies import PlaywrightCookies
 from parser.proxies.proxy import Proxy
 
@@ -40,19 +43,25 @@ class AioHttpClient:
         block_threshold: int = 3,  # ← сколько блоков подряд терпим
     ):
         self.proxy = proxy
-        self.cookies = PlaywrightCookies()
+        self.cookies = OwnCookiesProvider()
         self.timeout = timeout
         self.max_retries = max_retries
         self.retry_delay = retry_delay
         self.block_threshold = block_threshold
-
+        self.headers = HEADERS
         self._block_attempts = 0
 
     def _build_client(self) -> aiohttp.ClientSession:
         return aiohttp.ClientSession(
             timeout=ClientTimeout(total=self.timeout),
-            headers=HEADERS
+            headers=self.headers,
         )
+
+    def extract_cookies(self, cookies: SimpleCookie):
+        cookies_dict = {}
+        for key, val in cookies.items():
+            cookies_dict[key] = val.value
+        return cookies_dict
 
     async def request(self, method: str, url: str, **kwargs) -> httpx.Response:
         last_exc = None
@@ -61,19 +70,20 @@ class AioHttpClient:
             try:
                 async with self._build_client() as client:
                     if self.cookies:
-                        cookies = self.cookies.get()
+                        cookies = await self.cookies.get()
 
                         kwargs.setdefault("cookies", cookies)
 
-                    response_raw = await client.request(proxy="...", method=method, url=url, **kwargs)
+                    response_raw = await client.request(method=method, url=url, **kwargs)
                     response = ResponseObj()
                     response.url = url
                     response.status_code = response_raw.status
-                    response.cookies = response_raw.cookies
+                    response.cookies = self.extract_cookies(response_raw.cookies)
                     response.text = await response_raw.text()
 
 
                 # === обновление cookies (если нужно) ===
+
                 if self.cookies:
                     self.cookies.update(response)
 
@@ -89,12 +99,13 @@ class AioHttpClient:
                         logger.warning("Block threshold reached, handling block")
 
                         if self.cookies:
-                            await self.cookies.handle_block()
-
+                            cookies, headers, user_agent = await self.cookies.handle_block()
+                            self.cookies.update(cookies)
+                            self.headers = headers
                         self.proxy.handle_block()
                         self._block_attempts = 0
 
-                    time.sleep(self.retry_delay)
+                    time.sleep(random.uniform(1, self.retry_delay))
                     continue
 
                 # === успех ===
@@ -104,6 +115,6 @@ class AioHttpClient:
             except Exception as e:
                 last_exc = e
                 logger.warning(f"Request error (attempt {attempt}): {e}")
-                time.sleep(self.retry_delay)
+                time.sleep(random.uniform(1, self.retry_delay))
 
         raise RuntimeError("HTTP request failed after retries") from last_exc

@@ -5,6 +5,7 @@ from typing import Optional
 
 from loguru import logger
 
+from get_cookies import get_cookies
 from parser.cookies.base import CookiesProvider
 
 
@@ -40,10 +41,12 @@ class OwnCookiesProvider(CookiesProvider):
             import atexit
             atexit.register(self._save_on_exit)
 
-    def get(self) -> dict:
+    async def get(self) -> dict:
         if self.last_cookies:
             return self.last_cookies
-        raise Exception("Нет собственных cookies")
+        else:
+            cookies, _, _ = await get_cookies(headless=False)
+            self.last_cookies = cookies
 
     def update(self, response):
         """Обновляем куки, сохраняя существующие"""
@@ -51,7 +54,10 @@ class OwnCookiesProvider(CookiesProvider):
             return
 
         # response.cookies содержит ТОЛЬКО новые/измененные куки
-        response_cookies = dict(response.cookies)
+        if isinstance(response, dict):
+            response_cookies = response
+        else:
+            response_cookies = dict(response.cookies)
 
         if not response_cookies:
             logger.debug("Нет новых cookies в ответе")
@@ -63,9 +69,9 @@ class OwnCookiesProvider(CookiesProvider):
 
         # Проверяем, были ли реальные изменения
         changes = {}
-        for key, val in response_cookies.items():
-            if self.last_cookies.get(key) != val.value:
-                changes[key] = val.value
+        for key, value in response_cookies.items():
+            if self.last_cookies.get(key) != value:
+                changes[key] = value
 
         if not changes:
             logger.debug("Значения cookies не изменились")
@@ -78,12 +84,9 @@ class OwnCookiesProvider(CookiesProvider):
         # Сохраняем на диск
         self._save_to_disk()
 
-    def handle_block(self):
-        """
-        Ничего кроме логирования и паузы не делаем при блокировке
-        """
-        logger.warning("🚫 Блокировка с собственными cookies, ожидаем...")
-        time.sleep(self.UNBLOCK_TIMEOUT)
+    async def handle_block(self):
+        logger.warning("Блокировка, беру данные с playwright...")
+        return await get_cookies(headless=False)
 
     @staticmethod
     def _extract_cookies_from_response(response) -> Optional[dict]:

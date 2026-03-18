@@ -20,21 +20,15 @@ class PlaywrightCookies(CookiesProvider):
 
         self.last_id: str | None = None  # Может пригодиться для совместимости
         self.last_cookies: dict | None = None
+        self.last_headers: dict = {}
 
         self.unblock_started_at: float | None = None
         self.UNBLOCK_TIMEOUT = 10  # секунд
 
         self._load_from_disk()
 
-        self.headers = {
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/120.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        }
+        self.browser = None
+        self.context = None
 
         # Регистрируем сохранение при выходе
         if save_on_exit:
@@ -44,6 +38,8 @@ class PlaywrightCookies(CookiesProvider):
     def get(self) -> dict:
         if self.last_cookies:
             return self.last_cookies
+
+        # Получение куков браузером
         raise Exception("Нет собственных cookies")
 
     def update(self, response):

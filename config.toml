@@ -12,7 +12,7 @@ urls = [
     "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi-ASgBAgICAUSYC7CfAQ",
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848"
 ]
-count = 1
+count = 10
 keys_word_white_list = []
 keys_word_black_list = []
 seller_black_list = []
@@ -21,8 +21,8 @@ min_price = 0
 geo = ""
 proxy_string = "proxy"
 proxy_change_url = ""
-pause_general = 1
-pause_between_links = 1
+pause_general = 2
+pause_between_links = 2
 max_age = 0
 max_count_of_retry = 5
 ignore_reserv = true
