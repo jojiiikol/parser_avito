@@ -4,6 +4,7 @@ import json
 import random
 import re
 import time
+import typing
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
@@ -21,7 +22,7 @@ from filters.ads_filter import AdsFilter
 from hide_private_data import log_config
 from integrations.notifications.factory import build_notifier
 from load_config import load_avito_config
-from models import ItemsResponse, Item, Review, AnswerOnReview
+from models import ItemsResponse, Item, Review, AnswerOnReview, Seller
 from parser.cookies.factory import build_cookies_provider
 from parser.export.factory import build_result_storage
 from parser.http.aioclient import AioHttpClient
@@ -35,6 +36,7 @@ DEBUG_MODE = False
 
 logger.add("logs/app.log", rotation="5 MB", retention="5 days", level="DEBUG")
 
+#TODO: Остановился на рефаче, получении количества объявлений и сохранении данных о продавце
 
 class AvitoParse:
     def __init__(
@@ -243,7 +245,8 @@ class AvitoParse:
 
         for ad in ads:
             try:
-                html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
+                # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
+                html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru/dzerzhinsk/predlozheniya_uslug/manikyur_pedikyur_7793117457?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJyTndFVzFPN283eFBnN3EyIjt9t4SZrT8AAAA")
                 if not html_code_full_page:
                     continue
                 delay = random.uniform(0.1, 0.9)
@@ -253,8 +256,9 @@ class AvitoParse:
                 ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
                 ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
                 ad.score = self._extract_score(ad_json=ad_json)
-                ad.reviews = await self._extract_reviews(ad_json=ad_json, ad=ad)
+                ad.reviews, ad.count_reviews = await self._extract_reviews(ad_json=ad_json, ad=ad)
                 ad.category.specification = self._extract_specification(ad_json=ad_json)
+                ad.seller = self._extract_seller_info(ad_json=ad_json)
 
                 delay = random.uniform(0.1, 0.9)
                 time.sleep(delay)
@@ -288,44 +292,84 @@ class AvitoParse:
             logger.warning(f"Ошибка при получении полного описания: {err}")
             return ad.description
 
+    def _extract_experience(self, ad_json: dict) -> str:
+        try:
+            experience = ad_json.get("paramsDto", {}).get("items", [])[-1]
+            if experience and experience.get("title") == "Опыт работы":
+                experience = experience.get("description", "0")
+                return experience
+            return "0"
+        except Exception as err:
+            logger.warning("Ошибка при парсинге опыта работы")
+            return "0"
 
-    async def _extract_reviews(self, ad_json: dict, ad: Item) -> str | None:
+    def _extract_characteristics(self, ad_json: dict) -> str:
+        try:
+            if badges := ad_json.get("item", {}).get("sellerBadgeBar", {}).get("badges", []):
+                badges_list = [badge.get("title") for badge in badges]
+                return "\n".join(badges_list)
+            return ""
+        except Exception as err:
+            logger.warning("Ошибка при парсинге опыта работы")
+            return ""
+
+    def _extract_seller_info(self, ad_json: dict) -> Seller | None:
+        try:
+            seller_info = ad_json.get("seller", {})
+            seller = Seller(
+                name=seller_info.get("name", None),
+                experience = self._extract_experience(ad_json),
+                characteristics=self._extract_characteristics(ad_json),
+                type=ad_json.get("servicesSellerType", {}).get("title", None),
+                registration_date=seller_info.get("tenureSince", ""),
+            )
+            return seller
+        except Exception as err:
+            logger.warning(f"Ошибка при парсинге инфрмации о продавце {err}")
+            return None
+
+
+
+    async def _extract_reviews(self, ad_json: dict, ad: Item) -> typing.Union[str, int]:
         try:
             user_key = (ad_json.get("rating", {})
                         .get("userKey", None))
 
+            count_reviews: int = ad_json.get("rating", {}).get("activeReviewsCount", 0)
+            reviews = []
+
             item_id = ad.id
             title = ad.title
+            if user_key:
+                review_url = f"https://www.avito.ru/web/7/user/{user_key}/ratings?fromItem={item_id}"
+                response = await self.fetch_data(url=review_url)
+                json_data = json.loads(response)
+                entries = json_data.get("entries", [])
+                entries = list(filter(
+                    lambda entry: entry.get("type") == "rating" and entry.get("value", {}).get("itemTitle") == title, entries
+                ))
 
-            review_url = f"https://www.avito.ru/web/7/user/{user_key}/ratings?fromItem={item_id}"
-            response = await self.fetch_data(url=review_url)
-            json_data = json.loads(response)
-            entries = json_data.get("entries", [])
-            entries = list(filter(
-                lambda entry: entry.get("type") == "rating" and entry.get("value", {}).get("itemTitle") == title, entries
-            ))
-            reviews = []
-            for entry in entries:
-                review_entry = entry.get("value")
-                review = Review(
-                    text=review_entry.get("textSections")[0].get("text"),
-                    author=review_entry.get("title"),
-                    date = review_entry.get("rated"),
-                    score = review_entry.get("score"),
-                )
-                if answer := review_entry.get('answer'):
-                    answer = AnswerOnReview(
-                        text=answer.get("text"),
-                        author=answer.get("title")
+                for entry in entries:
+                    review_entry = entry.get("value")
+                    review = Review(
+                        text=review_entry.get("textSections")[0].get("text"),
+                        author=review_entry.get("title"),
+                        date = review_entry.get("rated"),
+                        score = review_entry.get("score"),
                     )
-                    review.answer = answer
+                    if answer := review_entry.get('answer'):
+                        answer = AnswerOnReview(
+                            text=answer.get("text"),
+                            author=answer.get("title")
+                        )
+                        review.answer = answer
 
-                reviews_to_text = f"Дата: {review.date}\nАвтор: {review.author}\nОтзыв: {review.text}\nОценка: {review.score}"
-                if review.answer:
-                    reviews_to_text += f"\nОтвет:{review.answer.text}"
+                    reviews_to_text = f"Дата: {review.date}\nАвтор: {review.author}\nОтзыв: {review.text}\nОценка: {review.score}"
+                    if review.answer:
+                        reviews_to_text += f"\nОтвет:{review.answer.text}"
 
-                reviews.append(reviews_to_text)
-            return "\n\n".join(reviews)
+                    reviews.append(reviews_to_text)
+            return "\n\n".join(reviews), count_reviews
         except Exception as err:
             logger.warning(f"Ошибка при парсинге отзывов {err}")
 

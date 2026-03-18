@@ -110,6 +110,15 @@ class Review(BaseModel):
     score: float | None = None
     answer: AnswerOnReview | None = None
 
+class Seller(BaseModel):
+    name: str | None = None
+    type: str | None = None
+    registration_date: str | None = None
+    active_ad_count: int = 0
+    characteristics: str | None = None
+    experience: str | None = None
+
+
 class Item(BaseModel):
     id: int | dict | None = None
     categoryId: int | dict | None = None
@@ -157,11 +166,13 @@ class Item(BaseModel):
     closestAddressId: int | None = None
     isSparePartsCompatibility: bool | None = None
     sellerId: str | None = None
+    seller: Seller | None = None
     isPromotion: bool = False
     total_views: int | None = None
     today_views: int | None = None
     phone: str | None = None
     reviews: str | None = None
+    count_reviews: int = 0
     score: float | None = None
 
 
