@@ -5,14 +5,15 @@ vk_token = ""
 vk_user_id = []
 urls = [
     "https://www.avito.ru/all/predlozheniya_uslug/krasota-ASgBAgICAUSYC6qfAQ?context=H4sIAAAAAAAA_wEtANL_YToxOntzOjg6ImZyb21QYWdlIjtzOjE2OiJzZWFyY2hGb3JtV2lkZ2V0Ijt9F_yIfi0AAAA",
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki-ASgBAgICAUSYC7T3AQ?cd=1&q=ремонт+техники",
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kvartir_i_domov_pod_klyuch-ASgBAgICAkSYC8CfAcQVwPUB?s=104",
     "https://www.avito.ru/all/predlozheniya_uslug/zdorove-ASgBAgICAUSYC_CylQM?s=104",
     "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy-ASgBAgICAUSYC7afAQ?s=104",
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kvartir_i_domov_pod_klyuch-ASgBAgICAkSYC8CfAcQVwPUB?s=104",
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki-ASgBAgICAUSYC7T3AQ?cd=1&q=ремонт+техники",
     "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi-ASgBAgICAUSYC7CfAQ",
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848"
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848",
+
 ]
-count = 10
+count = 1
 keys_word_white_list = []
 keys_word_black_list = []
 seller_black_list = []

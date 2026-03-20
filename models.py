@@ -111,10 +111,12 @@ class Review(BaseModel):
     answer: AnswerOnReview | None = None
 
 class Seller(BaseModel):
+    url: str | None = None
     name: str | None = None
     type: str | None = None
     registration_date: str | None = None
     active_ad_count: int = 0
+    completed_ad_count: int = 0
     characteristics: str | None = None
     experience: str | None = None
 
@@ -127,6 +129,8 @@ class Item(BaseModel):
     urlPath: str | None = None
     title: str | None = None
     description: str | None = None
+    additional_info: str | None = None
+    price_list: str | None = None
     category: Category | None = None
     location: Location | None = None
     addressDetailed: AddressDetailed | None = None
@@ -139,6 +143,7 @@ class Item(BaseModel):
     lastMinuteOffer: Optional[str] | Optional[dict] | None = None
     images: List[Image] | None = None
     imagesCount: int | None = None
+    videos: List[str] = []
     isFavorite: bool | None = None
     isNew: bool | None = None
     geo: Geo | None = None

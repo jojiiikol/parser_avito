@@ -26,6 +26,7 @@ class OwnCookiesProvider(CookiesProvider):
 
         self._load_from_disk()
 
+
         self.headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -80,6 +81,31 @@ class OwnCookiesProvider(CookiesProvider):
         # Обновляем только изменившиеся куки, остальные оставляем как есть
         self.last_cookies.update(changes)
         logger.info(f"🔄 Обновлены cookies: {list(changes.keys())}")
+
+        # Сохраняем на диск
+        self._save_to_disk()
+
+
+    def force_update(self, response):
+        """Перетираем все куки"""
+        if not response:
+            return
+
+        # response.cookies содержит ТОЛЬКО новые/измененные куки
+        if isinstance(response, dict):
+            response_cookies = response
+        else:
+            response_cookies = dict(response.cookies)
+
+        if not response_cookies:
+            logger.debug("Нет новых cookies в ответе")
+            return
+
+        self.last_cookies = {}
+        for key, value in response_cookies.items():
+            self.last_cookies[key] = value
+
+        logger.info(f"🔄 Перетерты cookies: {list(response_cookies.keys())}")
 
         # Сохраняем на диск
         self._save_to_disk()

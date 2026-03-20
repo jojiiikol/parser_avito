@@ -2,6 +2,7 @@
 Клиент для запросов парсера
 """
 import asyncio
+import os
 import random
 import time
 from http.cookies import SimpleCookie
@@ -11,8 +12,8 @@ import httpx
 from aiohttp import ClientTimeout
 from loguru import logger
 
+from get_cookies import get_cookies
 from parser.cookies.base import CookiesProvider
-from parser.cookies.own_cookies import OwnCookiesProvider
 from parser.cookies.playwright_cookies import PlaywrightCookies
 from parser.proxies.proxy import Proxy
 
@@ -40,10 +41,10 @@ class AioHttpClient:
         timeout: int = 20,
         max_retries: int = 5,
         retry_delay: int = 2,  # задержка после блокировки
-        block_threshold: int = 3,  # ← сколько блоков подряд терпим
+        block_threshold: int = 10,  # ← сколько блоков подряд терпим
     ):
         self.proxy = proxy
-        self.cookies = OwnCookiesProvider()
+        self.cookies = cookies
         self.timeout = timeout
         self.max_retries = max_retries
         self.retry_delay = retry_delay
@@ -52,9 +53,9 @@ class AioHttpClient:
         self._block_attempts = 0
 
     def _build_client(self) -> aiohttp.ClientSession:
+
         return aiohttp.ClientSession(
             timeout=ClientTimeout(total=self.timeout),
-            headers=self.headers,
         )
 
     def extract_cookies(self, cookies: SimpleCookie):
@@ -71,10 +72,12 @@ class AioHttpClient:
                 async with self._build_client() as client:
                     if self.cookies:
                         cookies = await self.cookies.get()
-
                         kwargs.setdefault("cookies", cookies)
 
-                    response_raw = await client.request(method=method, url=url, **kwargs)
+                    proxy_rotate = random.choice([os.getenv("PROXY_URL1"), os.getenv("PROXY_URL2")])
+                    logger.debug(f"Использую прокси {proxy_rotate}")
+
+                    response_raw = await client.request(proxy=proxy_rotate, method=method, url=url, headers=self.headers, **kwargs)
                     response = ResponseObj()
                     response.url = url
                     response.status_code = response_raw.status
@@ -100,7 +103,7 @@ class AioHttpClient:
 
                         if self.cookies:
                             cookies, headers, user_agent = await self.cookies.handle_block()
-                            self.cookies.update(cookies)
+                            self.cookies.force_update(cookies)
                             self.headers = headers
                         self.proxy.handle_block()
                         self._block_attempts = 0

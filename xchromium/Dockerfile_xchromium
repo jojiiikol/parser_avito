@@ -1,0 +1,56 @@
+FROM mcr.microsoft.com/playwright:v1.42.1-jammy
+WORKDIR /app
+
+ENV PROXY_GATEWAY_URL=proxy_url \
+    PROXY_USERNAME=proxy_user \
+    PROXY_PASSWORD=proxy_pass \
+    DISPLAY=0 \
+    DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+    # echo "deb http://deb.debian.org/debian bookworm contrib non-free" > /etc/apt/sources.list.d/contrib.list \
+    # echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" \
+    # | debconf-set-selections && \
+    # apt-get update && \
+    # apt-get install -y --no-install-recommends \
+    #   fontconfig ttf-mscorefonts-installer \
+    # fonts-dejavu \
+    # fonts-liberation && \
+    # fc-cache -f -v && \
+# RUN apt-get install -y \
+#     mitmproxy \
+#     socat \
+#     wget \
+#     gnupg \
+#     net-tools \
+#     chromium \
+#     chromium-driver \
+#     curl \
+#     nano \
+#     xvfb \
+#     x11-apps \
+#     unzip \
+#     && rm -rf /var/lib/apt/lists/*
+
+# RUN pip install playwright==1.55.0
+
+# Already has fonts, Python, Playwright; just add your MS fonts if needed
+RUN apt-get update && \
+    apt-get install -y \
+    python3-pip \
+    socat \
+    wget \
+    gnupg \
+    net-tools \
+    curl \
+    nano \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install --no-cache-dir -U pip && \
+    python3 -m pip install --no-cache-dir -U mitmproxy
+
+COPY ./init.sh .
+ENTRYPOINT ["/bin/bash", "./init.sh"]

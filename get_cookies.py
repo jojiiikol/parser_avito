@@ -8,6 +8,7 @@ from typing import Optional, Dict, List
 
 from dto import Proxy, ProxySplit
 from playwright_setup import ensure_playwright_installed
+from cookie_issuer import Playwright
 
 MAX_RETRIES = 3
 RETRY_DELAY = 10
@@ -81,7 +82,6 @@ class PlaywrightClient:
 
 
     async def launch_browser(self):
-        stealth = Stealth()
         self.playwright_context = async_playwright()
         playwright = await self.playwright_context.__aenter__()
         self.playwright = playwright
@@ -118,6 +118,7 @@ class PlaywrightClient:
 
         self.context = await self.browser.new_context(**context_args)
         await self.context.clear_cookies()
+        await self.context.clear_permissions()
 
 
     def extract_headers(self, headers: dict):
@@ -138,9 +139,10 @@ class PlaywrightClient:
 
     async def load_page(self, url: str):
         for attempt in range(10):
+            await self.context.clear_cookies()
             self.page = await self.context.new_page()
             try:
-                await self.page.goto(url=url,
+                response = await self.page.goto(url=url,
                                      timeout=100000,
                                      wait_until="domcontentloaded")
                 if self.stop_event and self.stop_event.is_set():
@@ -150,15 +152,16 @@ class PlaywrightClient:
                 self.page.on("request", lambda request: self.extract_headers(request.headers))
                 cookies = await self.context.cookies()
                 cookie_dict = self.parse_cookie_string(cookies)
-                if cookie_dict.get("ft"):
+                if response.status == 200:
                     logger.info("Cookies получены")
                     await self.page.close()
                     return cookie_dict
-            except Exception as err:
                 await self.page.close()
-                delay = random.randint(60, 180)
+            except Exception as err:
+                delay = random.randint(60, 60)
                 logger.warning(f"Не удалось получить cookies, повторяю операцию через {delay} секунд. Попытка {attempt+1}/{10}")
                 await asyncio.sleep(delay)
+                await self.page.close()
         return {}
 
 
@@ -178,12 +181,9 @@ class PlaywrightClient:
     async def get_cookies(self, url: str) -> dict:
         return await self.extract_cookies(url)
 
-
-
     async def change_ip(self, retries: int = MAX_RETRIES):
         if not self.proxy_split_obj:
             logger.info("Сейчас бы сменили ip, но прокси нет - поэтому ждем")
-            # await asyncio.sleep(random.uniform(60, 60))
             return False
         for attempt in range(1, retries + 1):
             try:
@@ -229,5 +229,6 @@ async def get_cookies(proxy: Proxy = None, headless: bool = True, stop_event=Non
         headless=headless,
         stop_event=stop_event
     )
-    cookies = await client.get_cookies(f"https://www.avito.ru/")
-    return cookies, client.headers, client.user_agent
+    pl = Playwright()
+    cookies, headers = await pl.issue()
+    return cookies, headers, client.user_agent

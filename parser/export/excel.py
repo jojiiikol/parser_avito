@@ -17,21 +17,35 @@ class ExcelStorage(ResultStorage):
     headers = [
         "Категория",
         "Название",
+        "Характеристики объявления",
+        "Прайс лист",
         "Цена",
         "URL",
         "Описание",
         "Дата публикации",
-        "Продавец",
+        "Имя продавца",
+        "URL продавца",
+        "Характеристики продавца",
+        "Опыт работы",
+        "Дата регистрации",
+        "Количество всех объявлений",
+        "Количество открытых объявлений",
+        "Количество закрытых объяалений",
+        "Тип продавца",
         "Адрес",
         "Адрес пользователя",
         "Координаты",
         "Изображения",
+        "Количество изображений",
+        "Видео",
+        "Количество видео",
         "Поднято",
         "Просмотры (всего)",
-        "Просмотры (сегодня)",
-        "Телефон",
+        "Просмотры (на время сбора)",
         "Общая оценка",
-        "Отзывы"
+        "Отзывы",
+        "Количество отзывов",
+        "Дата парсинга"
     ]
 
     def __init__(self, file_path: Path):
@@ -110,26 +124,40 @@ class ExcelStorage(ResultStorage):
                 row = [
                     self.excel_safe(ad.category.specification or ""),
                     self.excel_safe(ad.title),
+                    self.excel_safe(ad.additional_info or ""),
+                    self.excel_safe(ad.price_list),
                     ad.priceDetailed.value,
                     self.excel_safe(f"https://www.avito.ru/{ad.urlPath}"),
                     self.excel_safe(ad.description),
                     self._get_ad_time(ad),
-                    self.excel_safe(ad.sellerId or ""),
+                    self.excel_safe(ad.seller.name if ad.seller else ""),
+                    self.excel_safe(f"https://www.avito.ru/{ad.seller.url}" if ad.seller else ""),
+                    self.excel_safe(ad.seller.characteristics if ad.seller else ""),
+                    self.excel_safe(ad.seller.experience if ad.seller else ""),
+                    self.excel_safe(ad.seller.registration_date if ad.seller else ""),
+                    self.excel_safe(ad.seller.completed_ad_count + ad.seller.active_ad_count if ad.seller else ""),
+                    self.excel_safe(ad.seller.active_ad_count if ad.seller else ""),
+                    self.excel_safe(ad.seller.completed_ad_count if ad.seller else ""),
+                    self.excel_safe(ad.seller.type if ad.seller else ""),
                     self.excel_safe(ad.location.name if ad.location else ""),
                     self.excel_safe(self._get_item_address_user(ad)),
                     self.excel_safe(self._get_item_coords(ad)),
-                    self.excel_safe(";".join(images_urls)),
+                    self.excel_safe("\n".join(images_urls)),
+                    self.excel_safe(str(len(images_urls))),
+                    self.excel_safe("\n".join(ad.videos)),
+                    self.excel_safe(str(len(ad.videos))),
                     "Да" if ad.isPromotion else "Нет",
                     ad.total_views or "",
                     ad.today_views or "",
-                    self.excel_safe(ad.phone or ""),
                     self.excel_safe(ad.score or ""),
                     self.excel_safe(ad.reviews or ""),
+                    ad.count_reviews or 0,
+                    self.excel_safe(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
                 ]
 
                 sheet.append(row)
 
-            workbook.save(self.file_path)
+                workbook.save(self.file_path)
 
 
 
