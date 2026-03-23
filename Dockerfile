@@ -1,6 +1,7 @@
 FROM python:3.11-slim
 LABEL org.opencontainers.image.source=https://github.com/Duff89/parser_avito
 
+ENV TZ=Europe/Moscow
 RUN apt-get update && apt-get install \
 -y --ignore-missing --no-install-recommends --no-install-suggests \
 	libatk-bridge2.0-0t64 \
