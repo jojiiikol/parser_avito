@@ -40,93 +40,93 @@ logger.add("logs/app.log", rotation="5 MB", retention="5 days", level="DEBUG")
 
 instance_count = 1
 URLS = {
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/predmeti_shkoli_i_vuza-ASgBAgICAkSYC7afAaQrkrgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/inostrannie_yaziki-ASgBAgICAkSYC7afAaQrjrgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/detskoe_razvitie_logopedi-ASgBAgICAkSYC7afAaQrjLgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/professii_i_biznes-ASgBAgICAkSYC7afAaQrsPCNAw?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/tvorchestvo_hobbi_sport-ASgBAgICAkSYC7afAaQrlrgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/vozhdenie-ASgBAgICAkSYC7afAaQrirgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/pomoshch_v_oformlenii_rabot-ASgBAgICAkSYC7afAaQrlLgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/duhovnye_praktiki-ASgBAgICAkSYC7afAaQrmrgC?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/drugoe-ASgBAgICAkSYC7afAaQrkLgC?cd=1": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/predmeti_shkoli_i_vuza-ASgBAgICAkSYC7afAaQrkrgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/inostrannie_yaziki-ASgBAgICAkSYC7afAaQrjrgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/detskoe_razvitie_logopedi-ASgBAgICAkSYC7afAaQrjLgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/professii_i_biznes-ASgBAgICAkSYC7afAaQrsPCNAw?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/tvorchestvo_hobbi_sport-ASgBAgICAkSYC7afAaQrlrgC?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/vozhdenie-ASgBAgICAkSYC7afAaQrirgC?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/pomoshch_v_oformlenii_rabot-ASgBAgICAkSYC7afAaQrlLgC?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/duhovnye_praktiki-ASgBAgICAkSYC7afAaQrmrgC?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/drugoe-ASgBAgICAkSYC7afAaQrkLgC?cd=1": 100,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/uslugi_parikmahera-ASgBAgICAkSYC6qfAaIrhrgC?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/brovi_resnicy-ASgBAgICAkSYC6qfAaIrrOSKAw?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/permanentnyy_makiyazh-ASgBAgICAkSYC6qfAaIr9JSQAw?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/kosmetologiya-ASgBAgICAkSYC6qfAaIrkvCNAw?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/epilyaciya-ASgBAgICAkSYC6qfAaIrlPCNAw?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/makiyazh-ASgBAgICAkSYC6qfAaIr_rcC?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/spa_uslugi_massazh-ASgBAgICAkSYC6qfAaIrgrgC?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/tatu_pirsing-ASgBAgICAkSYC6qfAaIrhLgC?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/arenda_rabochego_mesta-ASgBAgICAkSYC6qfAaIrmPCNAw?716=10197": 15,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/drugoe-ASgBAgICAkSYC6qfAaIriLgC?716=10197": 15,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/uslugi_parikmahera-ASgBAgICAkSYC6qfAaIrhrgC?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/brovi_resnicy-ASgBAgICAkSYC6qfAaIrrOSKAw?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/permanentnyy_makiyazh-ASgBAgICAkSYC6qfAaIr9JSQAw?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/kosmetologiya-ASgBAgICAkSYC6qfAaIrkvCNAw?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/epilyaciya-ASgBAgICAkSYC6qfAaIrlPCNAw?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/makiyazh-ASgBAgICAkSYC6qfAaIr_rcC?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/spa_uslugi_massazh-ASgBAgICAkSYC6qfAaIrgrgC?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/tatu_pirsing-ASgBAgICAkSYC6qfAaIrhLgC?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/arenda_rabochego_mesta-ASgBAgICAkSYC6qfAaIrmPCNAw?716=10197": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/drugoe-ASgBAgICAkSYC6qfAaIriLgC?716=10197": 100,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kvartir_i_domov_pod_klyuch-ASgBAgICAkSYC8CfAcQVwPUB?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/dizajn_intererov-ASgBAgICAkSYC8CfAcQVsOmOAw?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/santekhnika-ASgBAgICAkSYC8CfAcQVsvUB?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/elektrika-ASgBAgICAkSYC8CfAcQVsPUB?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/sborka_i_remont_mebeli-ASgBAgICAkSYC8CfAcQVrPUB?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ostekleniye_balkonov-ASgBAgICAkSYC8CfAcQVtvUB?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/master_na_chas-ASgBAgICAkSYC8CfAcQVloyaAw?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vskrytie_i_remont_zamkov-ASgBAgICAkSYC8CfAcQVmIyaAw?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poklejka_oboev_i_malyarnye_raboty-ASgBAgICAkSYC8CfAcQVyvr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/potolki-ASgBAgICAkSYC8CfAcQVzvr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poly_i_napolnye_pokrytiya-ASgBAgICAkSYC8CfAcQVzPr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/shtukaturnye_raboty-ASgBAgICAkSYC8CfAcQVgv39Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/dveri-ASgBAgICAkSYC8CfAcQVwPr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/plitochnye_raboty-ASgBAgICAkSYC8CfAcQVyPr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/stolyarnye_i_plotnitskie_raboty-ASgBAgICAkSYC8CfAcQVgP39Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/gipsokartonnye_raboty-ASgBAgICAkSYC8CfAcQVvvr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vysotnye_raboty-ASgBAgICAkSYC8CfAcQVvPr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/izolyatsiya-ASgBAgICAkSYC8CfAcQVwvr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kommercheskih_pomeshcheniy-ASgBAgICAkSYC8CfAcQVtPUB?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ventilyatsiya-ASgBAgICAkSYC8CfAcQVuvr9Ag?716=10208": 8,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/drugoe-ASgBAgICAkSYC8CfAcQV0Pr9Ag?716=10208": 8,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kvartir_i_domov_pod_klyuch-ASgBAgICAkSYC8CfAcQVwPUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/dizajn_intererov-ASgBAgICAkSYC8CfAcQVsOmOAw?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/santekhnika-ASgBAgICAkSYC8CfAcQVsvUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/elektrika-ASgBAgICAkSYC8CfAcQVsPUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/sborka_i_remont_mebeli-ASgBAgICAkSYC8CfAcQVrPUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ostekleniye_balkonov-ASgBAgICAkSYC8CfAcQVtvUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/master_na_chas-ASgBAgICAkSYC8CfAcQVloyaAw?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vskrytie_i_remont_zamkov-ASgBAgICAkSYC8CfAcQVmIyaAw?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poklejka_oboev_i_malyarnye_raboty-ASgBAgICAkSYC8CfAcQVyvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/potolki-ASgBAgICAkSYC8CfAcQVzvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poly_i_napolnye_pokrytiya-ASgBAgICAkSYC8CfAcQVzPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/shtukaturnye_raboty-ASgBAgICAkSYC8CfAcQVgv39Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/dveri-ASgBAgICAkSYC8CfAcQVwPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/plitochnye_raboty-ASgBAgICAkSYC8CfAcQVyPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/stolyarnye_i_plotnitskie_raboty-ASgBAgICAkSYC8CfAcQVgP39Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/gipsokartonnye_raboty-ASgBAgICAkSYC8CfAcQVvvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vysotnye_raboty-ASgBAgICAkSYC8CfAcQVvPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/izolyatsiya-ASgBAgICAkSYC8CfAcQVwvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kommercheskih_pomeshcheniy-ASgBAgICAkSYC8CfAcQVtPUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ventilyatsiya-ASgBAgICAkSYC8CfAcQVuvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/drugoe-ASgBAgICAkSYC8CfAcQV0Pr9Ag?716=10208": 68,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 29,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/dietologiya-ASgBAgICAkSYC_CylQPahhbyspUD?cd=1": 29,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 29,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/dietologiya-ASgBAgICAkSYC_CylQPahhbyspUD?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/zdorove/stomatologiya-ASgBAgICAkSYC_CylQPahhba3pYD?cd=1": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorovye/podologiya-ASgBAgICAkSYC_CylQPahhbc3pYD?cd=1": 29,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorovye/podologiya-ASgBAgICAkSYC_CylQPahhbc3pYD?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/zdorove/drugoe-ASgBAgICAkSYC_CylQPahhbe3pYD?cd=1": 4,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_garazhej_bani_verand-ASgBAgICAkSYC6Cf8QLejw~cn_EC?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/otdelka_derevyannyh_domov-ASgBAgICAkSYC6Cf8QLejw_ckIcD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kladochnye_raboty-ASgBAgICAkSYC6Cf8QLejw_snYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/krovelnye_raboty-ASgBAgICAkSYC6Cf8QLejw_0nYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/svarka_kovka_metallokonstrukcii-ASgBAgICAkSYC6Cf8QLejw_6nYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/fundamentnye_i_betonnye_raboty-ASgBAgICAkSYC6Cf8QLejw~CnosD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/almaznoe_sverlenie_i_rezka-ASgBAgICAkSYC6Cf8QLejw_unYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/snos_i_demontazh-ASgBAgICAkSYC6Cf8QLejw_8nYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/fasadnye_raboty-ASgBAgICAkSYC6Cf8QLejw~AnosD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/proektirovanie_i_smety-ASgBAgICAkSYC6Cf8QLejw_4nYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/raznorabochie-ASgBAgICAkSYC6Cf8QLejw~MvY8D?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/izyskatelnye_raboty-ASgBAgICAkSYC6Cf8QLejw_qnYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/lestnicy-ASgBAgICAkSYC6Cf8QLejw_2nYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/gazifikaciya-ASgBAgICAkSYC6Cf8QLejw_ynYsD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kommercheskoe_stroitelstvo-ASgBAgICAkSYC6Cf8QLejw~AkZoD?716=3024848": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/drugoe-ASgBAgICAkSYC6Cf8QLejw~EnosD?716=3024848": 10,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_garazhej_bani_verand-ASgBAgICAkSYC6Cf8QLejw~cn_EC?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/otdelka_derevyannyh_domov-ASgBAgICAkSYC6Cf8QLejw_ckIcD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kladochnye_raboty-ASgBAgICAkSYC6Cf8QLejw_snYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/krovelnye_raboty-ASgBAgICAkSYC6Cf8QLejw_0nYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/svarka_kovka_metallokonstrukcii-ASgBAgICAkSYC6Cf8QLejw_6nYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/fundamentnye_i_betonnye_raboty-ASgBAgICAkSYC6Cf8QLejw~CnosD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/almaznoe_sverlenie_i_rezka-ASgBAgICAkSYC6Cf8QLejw_unYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/snos_i_demontazh-ASgBAgICAkSYC6Cf8QLejw_8nYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/fasadnye_raboty-ASgBAgICAkSYC6Cf8QLejw~AnosD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/proektirovanie_i_smety-ASgBAgICAkSYC6Cf8QLejw_4nYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/raznorabochie-ASgBAgICAkSYC6Cf8QLejw~MvY8D?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/izyskatelnye_raboty-ASgBAgICAkSYC6Cf8QLejw_qnYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/lestnicy-ASgBAgICAkSYC6Cf8QLejw_2nYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/gazifikaciya-ASgBAgICAkSYC6Cf8QLejw_ynYsD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kommercheskoe_stroitelstvo-ASgBAgICAkSYC6Cf8QLejw~AkZoD?716=3024848": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/drugoe-ASgBAgICAkSYC6Cf8QLejw~EnosD?716=3024848": 84,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/televizor-ASgBAgICAkSYC7T3Ad4V2vcB?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/mobilnyye_ustroystva-ASgBAgICAkSYC7T3Ad4V4vcB?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/foto_audio_videotekhnika-ASgBAgICAkSYC7T3Ad4V5vcB?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kondicionery_i_ventilyaciya-ASgBAgICAkSYC7T3Ad4V0qCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/stiralnye_syshilnye_mashiny-ASgBAgICAkSYC7T3Ad4V1KCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/posudomoechnye_mashiny-ASgBAgICAkSYC7T3Ad4V1qCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/holodilniki_i_morozilnye_kamery-ASgBAgICAkSYC7T3Ad4V2KCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kuhonnye_plity_varochnye_paneli-ASgBAgICAkSYC7T3Ad4V2qCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/gazovye_kotly_vodonagrevateli-ASgBAgICAkSYC7T3Ad4V3KCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kofemashiny-ASgBAgICAkSYC7T3Ad4V3qCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/shvejnyemashiny_overloki-ASgBAgICAkSYC7T3Ad4V4KCOAw?716=15834": 10,
-    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/drugoe-ASgBAgICAkSYC7T3Ad4V7KCOAw?716=15834": 10,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/televizor-ASgBAgICAkSYC7T3Ad4V2vcB?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/mobilnyye_ustroystva-ASgBAgICAkSYC7T3Ad4V4vcB?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/foto_audio_videotekhnika-ASgBAgICAkSYC7T3Ad4V5vcB?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kondicionery_i_ventilyaciya-ASgBAgICAkSYC7T3Ad4V0qCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/stiralnye_syshilnye_mashiny-ASgBAgICAkSYC7T3Ad4V1KCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/posudomoechnye_mashiny-ASgBAgICAkSYC7T3Ad4V1qCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/holodilniki_i_morozilnye_kamery-ASgBAgICAkSYC7T3Ad4V2KCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kuhonnye_plity_varochnye_paneli-ASgBAgICAkSYC7T3Ad4V2qCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/gazovye_kotly_vodonagrevateli-ASgBAgICAkSYC7T3Ad4V3KCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kofemashiny-ASgBAgICAkSYC7T3Ad4V3qCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/shvejnyemashiny_overloki-ASgBAgICAkSYC7T3Ad4V4KCOAw?716=15834": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/drugoe-ASgBAgICAkSYC7T3Ad4V7KCOAw?716=15834": 84,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/izgotovlenie_klyuchej_i_zatochka-ASgBAgICAkSYC7CfAZwL4p8B?cd=1": 35,
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/poshiv_i_remont_odezhdy-ASgBAgICAkSYC7CfAZwL5p8B?cd=1": 35,
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/remont_chasov-ASgBAgICAkSYC7CfAZwL6p8B?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/himchistka_stirka-ASgBAgICAkSYC7CfAZwL8p8B?cd=1": 35,
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 35
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/izgotovlenie_klyuchej_i_zatochka-ASgBAgICAkSYC7CfAZwL4p8B?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/poshiv_i_remont_odezhdy-ASgBAgICAkSYC7CfAZwL5p8B?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/remont_chasov-ASgBAgICAkSYC7CfAZwL6p8B?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/himchistka_stirka-ASgBAgICAkSYC7CfAZwL8p8B?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 100
 }
 
 class AvitoParse:
@@ -207,18 +207,27 @@ class AvitoParse:
                     config=self.config,
                     link_index=_index
                 )
+
+            first_page = await self.fetch_data(url=url)
+            html_page_count = self._extract_page_count(html_code=first_page)
+            logger.info(f"Найдено {html_page_count} страниц")
+
             page_count = URLS[url] * instance_count
-            if page_count > 50:
-                page_count = 50
+            if page_count > html_page_count:
+                page_count = html_page_count
+            logger.info(f"Используется количество в {page_count} страниц")
             for i in range(0, page_count):
                 ads_in_link = []
                 logger.info(f"page={i + 1}")
-                if self.stop_event and self.stop_event.is_set():
-                    return
-                if DEBUG_MODE:
-                    html_code = open("may.txt", "r", encoding="utf-8").read()
+                if i != 0:
+                    if self.stop_event and self.stop_event.is_set():
+                        return
+                    if DEBUG_MODE:
+                        html_code = open("may.txt", "r", encoding="utf-8").read()
+                    else:
+                        html_code = await self.fetch_data(url=url)
                 else:
-                    html_code = await self.fetch_data(url=url)
+                    html_code = await self.fetch_data(url="https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/predmeti_shkoli_i_vuza-ASgBAgICAkSYC7afAaQrkrgC?cd=1&context=H4sIAAAAAAAA_wEmANn_YToxOntzOjE6InkiO3M6MTY6InNUZXFGUzQ3T0xxN0pUZGkiO32yVuE4JgAAAA&p=8")
 
 
                 if not html_code:
@@ -376,16 +385,14 @@ class AvitoParse:
         if not self.config.parse_views:
             return ads
 
-        logger.info("Начинаю глубокий парсинг")
-
-        for ad_index, ad in enumerate(ads):
+        async def parallel(ad):
             try:
                 html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
                 # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
                 if not html_code_full_page:
-                    continue
+                    return
                 delay = random.uniform(1, 2)
-                time.sleep(delay)
+                await asyncio.sleep(delay)
                 ad_json = self.find_json_on_ad_page(html_code_full_page)
                 seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
                 if seller_url:
@@ -401,15 +408,52 @@ class AvitoParse:
                 ad.price_list = self._extract_price_list(html_code=html_code_full_page)
 
                 delay = random.uniform(1, 2)
-                time.sleep(delay)
-                self.parse_count += 1
-                logger.info(f"Обработано {self.parse_count} объявлений")
+                await asyncio.sleep(delay)
+                logger.info("Обработано")
+                return ad
             except Exception as err:
                 logger.error(f"Ошибка при парсинге {ad.urlPath}: {err}", exc_info=True)
-                continue
+                return
+
+        semaphore = asyncio.Semaphore(10)
+
+        async def process_with_semaphore(ad):
+            async with semaphore:
+                return await parallel(ad)
+
+        tasks = [process_with_semaphore(ad) for ad in ads]
+        await asyncio.gather(*tasks)
 
 
-
+        # for ad_index, ad in enumerate(ads):
+        #     try:
+        #         html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
+        #         # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
+        #         if not html_code_full_page:
+        #             continue
+        #         delay = random.uniform(1, 2)
+        #         time.sleep(delay)
+        #         ad_json = self.find_json_on_ad_page(html_code_full_page)
+        #         seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
+        #         if seller_url:
+        #             ad.seller = await self._extract_seller_info(ad_json=ad_json, seller_json=seller_json)
+        #             ad.reviews, ad.count_reviews = await self._extract_reviews(ad=ad, seller_json=seller_json)
+        #             ad.seller.url = seller_url
+        #         ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
+        #         ad.videos = self._extract_videos(ad_json=ad_json)
+        #         ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
+        #         ad.score = self._extract_score(ad_json=ad_json)
+        #         ad.category.specification = self._extract_specification(ad_json=ad_json)
+        #         ad.additional_info = self._extract_additional_info(ad_json=ad_json)
+        #         ad.price_list = self._extract_price_list(html_code=html_code_full_page)
+        #
+        #         delay = random.uniform(1, 2)
+        #         time.sleep(delay)
+        #         self.parse_count += 1
+        #         logger.info(f"Обработано {self.parse_count} объявлений")
+        #     except Exception as err:
+        #         logger.error(f"Ошибка при парсинге {ad.urlPath}: {err}", exc_info=True)
+        #         continue
         return ads
 
 
@@ -423,6 +467,18 @@ class AvitoParse:
         except Exception as err:
             logger.warning(f"Ошибка при парсинге телефонов: {err}")
             return ads
+
+    def _extract_page_count(self, html_code: str) -> int:
+        try:
+            soup = BeautifulSoup(html_code, "html.parser")
+            tag = "a", {"data-marker": re.compile("pagination-button/page.+")}
+            buttons = soup.find_all(*tag)
+            last_button = buttons[-1]
+            value = last_button.get("data-value", "50")
+            return int(value)
+        except Exception as err:
+            logger.warning(f"Ошибка при парсинге количества страниц: {err}")
+            return 50
 
     def _extract_full_description(self, html_code: str, ad: Item) -> str | None:
         try:

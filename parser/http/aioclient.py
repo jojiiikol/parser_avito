@@ -38,7 +38,7 @@ class AioHttpClient:
         self,
         proxy: Proxy,
         cookies: CookiesProvider | None = None,
-        timeout: int = 20,
+        timeout: int = 30,
         max_retries: int = 5,
         retry_delay: int = 2,  # задержка после блокировки
         block_threshold: int = 10,  # ← сколько блоков подряд терпим
@@ -74,7 +74,7 @@ class AioHttpClient:
                         cookies = await self.cookies.get()
                         kwargs.setdefault("cookies", cookies)
 
-                    proxy_rotate = random.choice([os.getenv("PROXY_URL1"), os.getenv("PROXY_URL2")])
+                    proxy_rotate = random.choice([os.getenv("PROXY_URL1")])
                     logger.debug(f"Использую прокси {proxy_rotate}")
 
                     response_raw = await client.request(proxy=proxy_rotate, method=method, url=url, headers=self.headers, **kwargs)
@@ -102,13 +102,14 @@ class AioHttpClient:
                         logger.warning("Block threshold reached, handling block")
 
                         if self.cookies:
-                            cookies, headers, user_agent = await self.cookies.handle_block()
-                            self.cookies.force_update(cookies)
-                            self.headers = headers
+                            # cookies, headers, user_agent = await self.cookies.handle_block()
+                            # self.cookies.force_update(cookies)
+                            # self.headers = headers
+                            await asyncio.sleep(60 * 60)
                         self.proxy.handle_block()
                         self._block_attempts = 0
 
-                    time.sleep(random.uniform(1, self.retry_delay))
+                    await asyncio.sleep(random.uniform(1, self.retry_delay))
                     continue
 
                 # === успех ===
