@@ -416,7 +416,7 @@ class AvitoParse:
                 logger.error(f"Ошибка при парсинге {ad.urlPath}: {err}", exc_info=True)
                 return
 
-        semaphore = asyncio.Semaphore(10)
+        semaphore = asyncio.Semaphore(25)
 
         async def process_with_semaphore(ad):
             async with semaphore:
