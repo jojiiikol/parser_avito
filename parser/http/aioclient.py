@@ -26,12 +26,21 @@ class ResponseObj:
 
 
 
-HEADERS = {
-    'sec-ch-ua-platform': '"Windows"',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
-    'sec-ch-ua': '"Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"',
-    'sec-ch-ua-mobile': '?0',
-}
+HEADERS = [
+    {
+        'sec-ch-ua-platform': '"Windows"',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
+        'sec-ch-ua': '"Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"',
+        'sec-ch-ua-mobile': '?0',
+    },
+    {
+        'sec-ch-ua-platform': '"macOS"',
+        'referer': 'https://www.avito.ru/',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+        'sec-ch-ua': '"Not.A/Brand";v="99", "Chromium";v="136"',
+        'sec-ch-ua-mobile': '?0'
+    }
+]
 
 class AioHttpClient:
     def __init__(
@@ -39,9 +48,9 @@ class AioHttpClient:
         proxy: Proxy,
         cookies: CookiesProvider | None = None,
         timeout: int = 30,
-        max_retries: int = 5,
+        max_retries: int = 3,
         retry_delay: int = 2,  # задержка после блокировки
-        block_threshold: int = 10,  # ← сколько блоков подряд терпим
+        block_threshold: int = 30,  # ← сколько блоков подряд терпим
     ):
         self.proxy = proxy
         self.cookies = cookies
@@ -51,6 +60,7 @@ class AioHttpClient:
         self.block_threshold = block_threshold
         self.headers = HEADERS
         self._block_attempts = 0
+        self.traffic = 0
 
     def _build_client(self) -> aiohttp.ClientSession:
 
@@ -75,14 +85,16 @@ class AioHttpClient:
                         kwargs.setdefault("cookies", cookies)
 
                     proxy_rotate = random.choice([os.getenv("PROXY_URL1")])
+                    headers_rotate = random.choice(HEADERS)
                     logger.debug(f"Использую прокси {proxy_rotate}")
 
-                    response_raw = await client.request(proxy=proxy_rotate, method=method, url=url, headers=self.headers, **kwargs)
+                    response_raw = await client.request(proxy=proxy_rotate, method=method, url=url, headers=headers_rotate, **kwargs)
                     response = ResponseObj()
                     response.url = url
                     response.status_code = response_raw.status
                     response.cookies = self.extract_cookies(response_raw.cookies)
                     response.text = await response_raw.text()
+
 
 
                 # === обновление cookies (если нужно) ===
@@ -105,7 +117,9 @@ class AioHttpClient:
                             # cookies, headers, user_agent = await self.cookies.handle_block()
                             # self.cookies.force_update(cookies)
                             # self.headers = headers
-                            await asyncio.sleep(60 * 60)
+                            delay = 40 * 60 + random.randint(0, 10 * 60)
+                            logger.warning(f"БЛОКИРОВКА на {delay} секунд")
+                            await asyncio.sleep(40 * 60)
                         self.proxy.handle_block()
                         self._block_attempts = 0
 
@@ -119,6 +133,5 @@ class AioHttpClient:
             except Exception as e:
                 last_exc = e
                 logger.warning(f"Request error (attempt {attempt}): {e}")
-                time.sleep(random.uniform(1, self.retry_delay))
 
         raise RuntimeError("HTTP request failed after retries") from last_exc

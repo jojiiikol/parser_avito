@@ -37,7 +37,7 @@ class AvitoConfig:
     debug_mode: int = 0
     pause_general: int = 60
     pause_between_links: int = 5
-    max_count_of_retry: int = 5
+    max_count_of_retry: int = 3
     ignore_reserv: bool = True
     ignore_promotion: bool = False
     one_time_start: bool = False

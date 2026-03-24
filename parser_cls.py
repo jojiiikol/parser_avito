@@ -44,10 +44,10 @@ URLS = {
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/inostrannie_yaziki-ASgBAgICAkSYC7afAaQrjrgC?cd=1": 100,
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/detskoe_razvitie_logopedi-ASgBAgICAkSYC7afAaQrjLgC?cd=1": 100,
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/professii_i_biznes-ASgBAgICAkSYC7afAaQrsPCNAw?cd=1": 100,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/tvorchestvo_hobbi_sport-ASgBAgICAkSYC7afAaQrlrgC?cd=1": 100,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/vozhdenie-ASgBAgICAkSYC7afAaQrirgC?cd=1": 100,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/pomoshch_v_oformlenii_rabot-ASgBAgICAkSYC7afAaQrlLgC?cd=1": 100,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/duhovnye_praktiki-ASgBAgICAkSYC7afAaQrmrgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/tvorchestvo_hobbi_sport-ASgBAgICAkSYC7afAaQrlrgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/vozhdenie-ASgBAgICAkSYC7afAaQrirgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/pomoshch_v_oformlenii_rabot-ASgBAgICAkSYC7afAaQrlLgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/duhovnye_praktiki-ASgBAgICAkSYC7afAaQrmrgC?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/drugoe-ASgBAgICAkSYC7afAaQrkLgC?cd=1": 100,
 
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
@@ -122,7 +122,7 @@ URLS = {
     "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/shvejnyemashiny_overloki-ASgBAgICAkSYC7T3Ad4V4KCOAw?716=15834": 84,
     "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/drugoe-ASgBAgICAkSYC7T3Ad4V7KCOAw?716=15834": 84,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/izgotovlenie_klyuchej_i_zatochka-ASgBAgICAkSYC7CfAZwL4p8B?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/izgotovlenie_klyuchej_i_zatochka-ASgBAgICAkSYC7CfAZwL4p8B?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/poshiv_i_remont_odezhdy-ASgBAgICAkSYC7CfAZwL5p8B?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/remont_chasov-ASgBAgICAkSYC7CfAZwL6p8B?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/himchistka_stirka-ASgBAgICAkSYC7CfAZwL8p8B?cd=1": 100,
@@ -387,12 +387,13 @@ class AvitoParse:
 
         async def parallel(ad):
             try:
+                logger.info("Засыпаю...")
+                await asyncio.sleep(20 + random.randint(5, 30))
                 html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
                 # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
                 if not html_code_full_page:
                     return
-                delay = random.uniform(1, 2)
-                await asyncio.sleep(delay)
+                await asyncio.sleep(10 + random.randint(5, 10))
                 ad_json = self.find_json_on_ad_page(html_code_full_page)
                 seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
                 if seller_url:
