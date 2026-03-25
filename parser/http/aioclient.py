@@ -50,7 +50,7 @@ class AioHttpClient:
         timeout: int = 30,
         max_retries: int = 3,
         retry_delay: int = 2,  # задержка после блокировки
-        block_threshold: int = 30,  # ← сколько блоков подряд терпим
+        block_threshold: int = 20,  # ← сколько блоков подряд терпим
     ):
         self.proxy = proxy
         self.cookies = cookies
@@ -113,7 +113,7 @@ class AioHttpClient:
                         f"attempt {self._block_attempts}"
                     )
 
-                    if self._block_attempts >= self.block_threshold or self._global_retries >= 30:
+                    if self._block_attempts >= self.block_threshold or self._global_retries >= 20:
                         print(self._block_attempts)
                         print(self._global_retries)
                         logger.warning("Block threshold reached, handling block")
