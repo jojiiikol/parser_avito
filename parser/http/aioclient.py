@@ -90,6 +90,8 @@ class AioHttpClient:
                     logger.debug(f"Использую прокси {proxy_rotate}")
 
                     response_raw = await client.request(proxy=proxy_rotate, method=method, url=url, headers=headers_rotate, **kwargs)
+                    self.traffic += len(await response_raw.read()) / 1024 / 1024
+                    logger.info(f"Траффик: {self.traffic}")
                     response = ResponseObj()
                     response.url = url
                     response.status_code = response_raw.status
@@ -112,6 +114,8 @@ class AioHttpClient:
                     )
 
                     if self._block_attempts >= self.block_threshold or self._global_retries >= 30:
+                        print(self._block_attempts)
+                        print(self._global_retries)
                         logger.warning("Block threshold reached, handling block")
 
                         if self.cookies:
@@ -120,7 +124,7 @@ class AioHttpClient:
                             # self.headers = headers
                             delay = 40 * 60 + random.randint(0, 10 * 60)
                             logger.warning(f"БЛОКИРОВКА на {delay} секунд")
-                            await asyncio.sleep(40 * 60)
+                            await asyncio.sleep(delay)
                         self.proxy.handle_block()
                         self._block_attempts = 0
                         self._global_retries = 0
@@ -129,7 +133,7 @@ class AioHttpClient:
                     continue
 
                 # === успех ===
-                self._global_retries += 1
+                self._global_retries = 0
                 self._block_attempts = 0
                 return response
 
