@@ -50,7 +50,7 @@ URLS = {
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/duhovnye_praktiki-ASgBAgICAkSYC7afAaQrmrgC?cd=1": 100,
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/drugoe-ASgBAgICAkSYC7afAaQrkLgC?cd=1": 100,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/uslugi_parikmahera-ASgBAgICAkSYC6qfAaIrhrgC?716=10197": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/brovi_resnicy-ASgBAgICAkSYC6qfAaIrrOSKAw?716=10197": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/permanentnyy_makiyazh-ASgBAgICAkSYC6qfAaIr9JSQAw?716=10197": 100,
@@ -84,7 +84,7 @@ URLS = {
     "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ventilyatsiya-ASgBAgICAkSYC8CfAcQVuvr9Ag?716=10208": 68,
     "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/drugoe-ASgBAgICAkSYC8CfAcQV0Pr9Ag?716=10208": 68,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 84,
     "https://www.avito.ru/all/predlozheniya_uslug/zdorove/dietologiya-ASgBAgICAkSYC_CylQPahhbyspUD?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/zdorove/stomatologiya-ASgBAgICAkSYC_CylQPahhba3pYD?cd=1": 10,
@@ -227,7 +227,7 @@ class AvitoParse:
                     else:
                         html_code = await self.fetch_data(url=url)
                 else:
-                    html_code = await self.fetch_data(url="https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/predmeti_shkoli_i_vuza-ASgBAgICAkSYC7afAaQrkrgC?cd=1&context=H4sIAAAAAAAA_wEmANn_YToxOntzOjE6InkiO3M6MTY6InNUZXFGUzQ3T0xxN0pUZGkiO32yVuE4JgAAAA&p=8")
+                    html_code = first_page
 
 
                 if not html_code:
@@ -416,13 +416,7 @@ class AvitoParse:
                 logger.error(f"Ошибка при парсинге {ad.urlPath}: {err}", exc_info=True)
                 return
 
-        semaphore = asyncio.Semaphore(25)
-
-        async def process_with_semaphore(ad):
-            async with semaphore:
-                return await parallel(ad)
-
-        tasks = [process_with_semaphore(ad) for ad in ads]
+        tasks = [parallel(ad) for ad in ads]
         await asyncio.gather(*tasks)
 
 
