@@ -48,9 +48,9 @@ URLS = {
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/vozhdenie-ASgBAgICAkSYC7afAaQrirgC?cd=1": 100,
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/pomoshch_v_oformlenii_rabot-ASgBAgICAkSYC7afAaQrlLgC?cd=1": 100,
     # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/duhovnye_praktiki-ASgBAgICAkSYC7afAaQrmrgC?cd=1": 100,
-    "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/drugoe-ASgBAgICAkSYC7afAaQrkLgC?cd=1": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/obuchenie_kursy/drugoe-ASgBAgICAkSYC7afAaQrkLgC?cd=1": 100,
 
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/uslugi_parikmahera-ASgBAgICAkSYC6qfAaIrhrgC?716=10197": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/brovi_resnicy-ASgBAgICAkSYC6qfAaIrrOSKAw?716=10197": 100,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/permanentnyy_makiyazh-ASgBAgICAkSYC6qfAaIr9JSQAw?716=10197": 100,

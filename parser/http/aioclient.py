@@ -60,6 +60,7 @@ class AioHttpClient:
         self.block_threshold = block_threshold
         self.headers = HEADERS
         self._block_attempts = 0
+        self._global_retries = 0
         self.traffic = 0
 
     def _build_client(self) -> aiohttp.ClientSession:
@@ -110,7 +111,7 @@ class AioHttpClient:
                         f"attempt {self._block_attempts}"
                     )
 
-                    if self._block_attempts >= self.block_threshold:
+                    if self._block_attempts >= self.block_threshold or self._global_retries >= 30:
                         logger.warning("Block threshold reached, handling block")
 
                         if self.cookies:
@@ -122,16 +123,19 @@ class AioHttpClient:
                             await asyncio.sleep(40 * 60)
                         self.proxy.handle_block()
                         self._block_attempts = 0
+                        self._global_retries = 0
 
                     await asyncio.sleep(random.uniform(1, self.retry_delay))
                     continue
 
                 # === успех ===
+                self._global_retries += 1
                 self._block_attempts = 0
                 return response
 
             except Exception as e:
                 last_exc = e
                 logger.warning(f"Request error (attempt {attempt}): {e}")
+                self._global_retries += 1
 
         raise RuntimeError("HTTP request failed after retries") from last_exc
