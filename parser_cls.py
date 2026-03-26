@@ -52,12 +52,12 @@ URLS = {
 
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/manikyur_pedikyur-ASgBAgICAkSYC6qfAaIrgLgC?716=10197": 100,
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/uslugi_parikmahera-ASgBAgICAkSYC6qfAaIrhrgC?716=10197": 100,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/brovi_resnicy-ASgBAgICAkSYC6qfAaIrrOSKAw?716=10197": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/permanentnyy_makiyazh-ASgBAgICAkSYC6qfAaIr9JSQAw?716=10197": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/kosmetologiya-ASgBAgICAkSYC6qfAaIrkvCNAw?716=10197": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/epilyaciya-ASgBAgICAkSYC6qfAaIrlPCNAw?716=10197": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/makiyazh-ASgBAgICAkSYC6qfAaIr_rcC?716=10197": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/krasota/spa_uslugi_massazh-ASgBAgICAkSYC6qfAaIrgrgC?716=10197": 50,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/brovi_resnicy-ASgBAgICAkSYC6qfAaIrrOSKAw?716=10197": 50,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/permanentnyy_makiyazh-ASgBAgICAkSYC6qfAaIr9JSQAw?716=10197": 50,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/kosmetologiya-ASgBAgICAkSYC6qfAaIrkvCNAw?716=10197": 50,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/epilyaciya-ASgBAgICAkSYC6qfAaIrlPCNAw?716=10197": 50,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/makiyazh-ASgBAgICAkSYC6qfAaIr_rcC?716=10197": 50,
+    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/spa_uslugi_massazh-ASgBAgICAkSYC6qfAaIrgrgC?716=10197": 50,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/tatu_pirsing-ASgBAgICAkSYC6qfAaIrhLgC?716=10197": 50,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/arenda_rabochego_mesta-ASgBAgICAkSYC6qfAaIrmPCNAw?716=10197": 50,
     "https://www.avito.ru/all/predlozheniya_uslug/krasota/drugoe-ASgBAgICAkSYC6qfAaIriLgC?716=10197": 50,
@@ -191,7 +191,7 @@ class AvitoParse:
             seller_page = await self.fetch_data(url=f"https://www.avito.ru{seller_url}")
             seller_json = self.find_json_on_seller_page(seller_page)
             return seller_url, seller_json
-        return None
+        return None, None
 
     async def parse(self):
         if not self.config.one_file_for_link:
@@ -413,7 +413,7 @@ class AvitoParse:
                 logger.info("Обработано")
                 return ad
             except Exception as err:
-                logger.error(f"Ошибка при парсинге {ad.urlPath}: {err}", exc_info=True)
+                logger.error(f"Ошибка при парсинге {ad.urlPath}: {traceback.print_exc()}", exc_info=True)
                 return
 
         tasks = [parallel(ad) for ad in ads]
@@ -567,8 +567,12 @@ class AvitoParse:
 
             if seller_json:
                 item_data = seller_json.get("searchData", {}).get("profileCatalog", {})
-                seller.completed_ad_count = 0 if "нет" in item_data.get("items", [])[0].get("closedItemsText", "0").lower() else int(item_data.get("items", [])[0].get("closedItemsText", "0").split()[0])
-                seller.active_ad_count = item_data.get("foundCount", 0)
+                try:
+                    seller.completed_ad_count = 0 if "нет" in item_data.get("items", [])[0].get("closedItemsText", "0").lower() else int(item_data.get("items", [])[0].get("closedItemsText", "0").split()[0])
+                    seller.active_ad_count = item_data.get("foundCount", 0)
+                except Exception as err:
+                    seller.completed_ad_count = 0
+                    seller.active_ad_count = 0
 
             return seller
         except Exception as err:
@@ -610,8 +614,10 @@ class AvitoParse:
 
                     reviews.append(reviews_to_text)
                 return "\n\n".join(reviews), count_reviews
+            return None, None
         except Exception as err:
             logger.warning(f"Ошибка при парсинге отзывов {err}")
+            return None, None
 
 
     def _extract_score(self, ad_json: dict) -> float | None:
