@@ -3,7 +3,7 @@
 services:
   parser_avito:
     container_name: avito
-    image: jojiiikol/parser-avito-add:latest
+    image: jojiiikol/parser-avito:latest
       #build:
       #  context: .
       #  dockerfile: Dockerfile
