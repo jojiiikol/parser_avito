@@ -385,39 +385,43 @@ class AvitoParse:
         if not self.config.parse_views:
             return ads
 
-        async def parallel(ad):
-            try:
-                logger.info("Засыпаю...")
-                await asyncio.sleep(20 + random.randint(5, 30))
-                html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
-                # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
-                if not html_code_full_page:
+        async def parallel(ad, semaphore):
+            async with semaphore:
+                try:
+                    logger.info("Засыпаю...")
+                    await asyncio.sleep(20 + random.randint(5, 30))
+                    html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
+                    # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
+                    if not html_code_full_page:
+                        return
+                    await asyncio.sleep(10 + random.randint(5, 10))
+                    ad_json = self.find_json_on_ad_page(html_code_full_page)
+                    seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
+                    if seller_url:
+                        ad.seller = await self._extract_seller_info(ad_json=ad_json, seller_json=seller_json)
+                        ad.reviews, ad.count_reviews = await self._extract_reviews(ad=ad, seller_json=seller_json)
+                        ad.seller.url = seller_url
+                    ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
+                    ad.videos = self._extract_videos(ad_json=ad_json)
+                    ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
+                    ad.score = self._extract_score(ad_json=ad_json)
+                    ad.category.specification = self._extract_specification(ad_json=ad_json)
+                    ad.additional_info = self._extract_additional_info(ad_json=ad_json)
+                    ad.price_list = self._extract_price_list(html_code=html_code_full_page)
+
+                    delay = random.uniform(1, 2)
+                    await asyncio.sleep(delay)
+                    logger.info("Обработано")
+                    return ad
+                except Exception as err:
+                    logger.error(f"Ошибка при парсинге {ad.urlPath}: {traceback.print_exc()}", exc_info=True)
                     return
-                await asyncio.sleep(10 + random.randint(5, 10))
-                ad_json = self.find_json_on_ad_page(html_code_full_page)
-                seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
-                if seller_url:
-                    ad.seller = await self._extract_seller_info(ad_json=ad_json, seller_json=seller_json)
-                    ad.reviews, ad.count_reviews = await self._extract_reviews(ad=ad, seller_json=seller_json)
-                    ad.seller.url = seller_url
-                ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
-                ad.videos = self._extract_videos(ad_json=ad_json)
-                ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
-                ad.score = self._extract_score(ad_json=ad_json)
-                ad.category.specification = self._extract_specification(ad_json=ad_json)
-                ad.additional_info = self._extract_additional_info(ad_json=ad_json)
-                ad.price_list = self._extract_price_list(html_code=html_code_full_page)
 
-                delay = random.uniform(1, 2)
-                await asyncio.sleep(delay)
-                logger.info("Обработано")
-                return ad
-            except Exception as err:
-                logger.error(f"Ошибка при парсинге {ad.urlPath}: {traceback.print_exc()}", exc_info=True)
-                return
-
-        tasks = [parallel(ad) for ad in ads]
+        semaphore = asyncio.Semaphore(10)
+        tasks = [parallel(ad, semaphore) for ad in ads]
         await asyncio.gather(*tasks)
+
+
 
 
         # for ad_index, ad in enumerate(ads):
