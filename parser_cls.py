@@ -68,28 +68,28 @@ URLS = {
     # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/elektrika-ASgBAgICAkSYC8CfAcQVsPUB?716=10208": 68,
     # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/sborka_i_remont_mebeli-ASgBAgICAkSYC8CfAcQVrPUB?716=10208": 68,
     # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ostekleniye_balkonov-ASgBAgICAkSYC8CfAcQVtvUB?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/master_na_chas-ASgBAgICAkSYC8CfAcQVloyaAw?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vskrytie_i_remont_zamkov-ASgBAgICAkSYC8CfAcQVmIyaAw?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poklejka_oboev_i_malyarnye_raboty-ASgBAgICAkSYC8CfAcQVyvr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/potolki-ASgBAgICAkSYC8CfAcQVzvr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poly_i_napolnye_pokrytiya-ASgBAgICAkSYC8CfAcQVzPr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/shtukaturnye_raboty-ASgBAgICAkSYC8CfAcQVgv39Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/dveri-ASgBAgICAkSYC8CfAcQVwPr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/plitochnye_raboty-ASgBAgICAkSYC8CfAcQVyPr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/stolyarnye_i_plotnitskie_raboty-ASgBAgICAkSYC8CfAcQVgP39Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/gipsokartonnye_raboty-ASgBAgICAkSYC8CfAcQVvvr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vysotnye_raboty-ASgBAgICAkSYC8CfAcQVvPr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/izolyatsiya-ASgBAgICAkSYC8CfAcQVwvr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kommercheskih_pomeshcheniy-ASgBAgICAkSYC8CfAcQVtPUB?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ventilyatsiya-ASgBAgICAkSYC8CfAcQVuvr9Ag?716=10208": 68,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/drugoe-ASgBAgICAkSYC8CfAcQV0Pr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/master_na_chas-ASgBAgICAkSYC8CfAcQVloyaAw?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vskrytie_i_remont_zamkov-ASgBAgICAkSYC8CfAcQVmIyaAw?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poklejka_oboev_i_malyarnye_raboty-ASgBAgICAkSYC8CfAcQVyvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/potolki-ASgBAgICAkSYC8CfAcQVzvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/poly_i_napolnye_pokrytiya-ASgBAgICAkSYC8CfAcQVzPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/shtukaturnye_raboty-ASgBAgICAkSYC8CfAcQVgv39Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/dveri-ASgBAgICAkSYC8CfAcQVwPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/plitochnye_raboty-ASgBAgICAkSYC8CfAcQVyPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/stolyarnye_i_plotnitskie_raboty-ASgBAgICAkSYC8CfAcQVgP39Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/gipsokartonnye_raboty-ASgBAgICAkSYC8CfAcQVvvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/vysotnye_raboty-ASgBAgICAkSYC8CfAcQVvPr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/izolyatsiya-ASgBAgICAkSYC8CfAcQVwvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/remont_kommercheskih_pomeshcheniy-ASgBAgICAkSYC8CfAcQVtPUB?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/ventilyatsiya-ASgBAgICAkSYC8CfAcQVuvr9Ag?716=10208": 68,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_otdelka/drugoe-ASgBAgICAkSYC8CfAcQV0Pr9Ag?716=10208": 68,
 
-    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 84,
-    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/dietologiya-ASgBAgICAkSYC_CylQPahhbyspUD?cd=1": 100,
-    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 100,
-    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/stomatologiya-ASgBAgICAkSYC_CylQPahhba3pYD?cd=1": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/zdorovye/podologiya-ASgBAgICAkSYC_CylQPahhbc3pYD?cd=1": 100,
-    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/drugoe-ASgBAgICAkSYC_CylQPahhbe3pYD?cd=1": 4,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 84,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/dietologiya-ASgBAgICAkSYC_CylQPahhbyspUD?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/stomatologiya-ASgBAgICAkSYC_CylQPahhba3pYD?cd=1": 10,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorovye/podologiya-ASgBAgICAkSYC_CylQPahhbc3pYD?cd=1": 100,
+    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/drugoe-ASgBAgICAkSYC_CylQPahhbe3pYD?cd=1": 4,
 
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848": 84,
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_garazhej_bani_verand-ASgBAgICAkSYC6Cf8QLejw~cn_EC?716=3024848": 84,
@@ -129,6 +129,7 @@ URLS = {
     "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 100
 }
 
+
 class AvitoParse:
     def __init__(
             self,
@@ -154,7 +155,6 @@ class AvitoParse:
         )
         self.ads_filter = AdsFilter(config=config, is_viewed_fn=self.is_viewed)
         log_config(config=self.config, version=VERSION)
-
 
     def get_proxy_obj(self) -> Proxy | None:
         if all([self.config.proxy_string, self.config.proxy_change_url]):
@@ -229,7 +229,6 @@ class AvitoParse:
                 else:
                     html_code = first_page
 
-
                 if not html_code:
                     logger.warning(
                         f"Не удалось получить HTML для {url}, пробую заново через {self.config.pause_between_links} сек.")
@@ -261,7 +260,6 @@ class AvitoParse:
 
                 # Глубокий парсинг
                 filter_ads = await self.deep_parse(ads=filter_ads)
-
 
                 # Телефоны
                 filter_ads = self.parse_phone(ads=filter_ads)
@@ -309,10 +307,10 @@ class AvitoParse:
 
                 script_type = _script.get('type')
 
-
                 if data_type == 'mime':
                     for script in html_code.select('script'):
-                        if script.get('type') == 'mime/invalid' and script.get('data-mfe-state') == 'true' and 'sandbox' not in script.text:
+                        if script.get('type') == 'mime/invalid' and script.get(
+                                'data-mfe-state') == 'true' and 'sandbox' not in script.text:
                             data = json.loads(html_lib.unescape(script.text))
                             if data.get('i18n', {}).get('hasMessages', {}):
                                 return data.get('state', {}).get('data', {})
@@ -385,44 +383,39 @@ class AvitoParse:
         if not self.config.parse_views:
             return ads
 
-        async def parallel(ad, semaphore):
-            async with semaphore:
-                try:
-                    logger.info("Засыпаю...")
-                    await asyncio.sleep(20 + random.randint(5, 30))
-                    html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
-                    # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
-                    if not html_code_full_page:
-                        return
-                    await asyncio.sleep(10 + random.randint(5, 10))
-                    ad_json = self.find_json_on_ad_page(html_code_full_page)
-                    seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
-                    if seller_url:
-                        ad.seller = await self._extract_seller_info(ad_json=ad_json, seller_json=seller_json)
-                        ad.reviews, ad.count_reviews = await self._extract_reviews(ad=ad, seller_json=seller_json)
-                        ad.seller.url = seller_url
-                    ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
-                    ad.videos = self._extract_videos(ad_json=ad_json)
-                    ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
-                    ad.score = self._extract_score(ad_json=ad_json)
-                    ad.category.specification = self._extract_specification(ad_json=ad_json)
-                    ad.additional_info = self._extract_additional_info(ad_json=ad_json)
-                    ad.price_list = self._extract_price_list(html_code=html_code_full_page)
-
-                    delay = random.uniform(1, 2)
-                    await asyncio.sleep(delay)
-                    logger.info("Обработано")
-                    return ad
-                except Exception as err:
-                    logger.error(f"Ошибка при парсинге {ad.urlPath}: {traceback.print_exc()}", exc_info=True)
+        async def parallel(ad):
+            try:
+                logger.info("Засыпаю...")
+                await asyncio.sleep(20 + random.randint(5, 30))
+                html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru{ad.urlPath}")
+                # html_code_full_page = await self.fetch_data(url=f"https://www.avito.ru//volgograd/predlozheniya_uslug/tatu_tatu-master_2377521191?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJUcGNwN0xYVVlFOVR3ZXR2Ijt90kVpBD8AAAA")
+                if not html_code_full_page:
                     return
+                await asyncio.sleep(10 + random.randint(5, 10))
+                ad_json = self.find_json_on_ad_page(html_code_full_page)
+                seller_url, seller_json = await self.fetch_seller_url_and_json(ad_json=ad_json)
+                if seller_url:
+                    ad.seller = await self._extract_seller_info(ad_json=ad_json, seller_json=seller_json)
+                    ad.reviews, ad.count_reviews = await self._extract_reviews(ad=ad, seller_json=seller_json)
+                    ad.seller.url = seller_url
+                ad.total_views, ad.today_views = self._extract_views(html=html_code_full_page)
+                ad.videos = self._extract_videos(ad_json=ad_json)
+                ad.description = self._extract_full_description(html_code=html_code_full_page, ad=ad)
+                ad.score = self._extract_score(ad_json=ad_json)
+                ad.category.specification = self._extract_specification(ad_json=ad_json)
+                ad.additional_info = self._extract_additional_info(ad_json=ad_json)
+                ad.price_list = self._extract_price_list(html_code=html_code_full_page)
 
-        semaphore = asyncio.Semaphore(10)
-        tasks = [parallel(ad, semaphore) for ad in ads]
+                delay = random.uniform(1, 2)
+                await asyncio.sleep(delay)
+                logger.info("Обработано")
+                return ad
+            except Exception as err:
+                logger.error(f"Ошибка при парсинге {ad.urlPath}: {traceback.print_exc()}", exc_info=True)
+                return
+
+        tasks = [parallel(ad) for ad in ads]
         await asyncio.gather(*tasks)
-
-
-
 
         # for ad_index, ad in enumerate(ads):
         #     try:
@@ -454,7 +447,6 @@ class AvitoParse:
         #         logger.error(f"Ошибка при парсинге {ad.urlPath}: {err}", exc_info=True)
         #         continue
         return ads
-
 
     def parse_phone(self, ads: list[Item]) -> list[Item]:
         if not self.config.parse_phone or self.config.parse_phone:
@@ -529,9 +521,6 @@ class AvitoParse:
             logger.warning(f"При парсинге видео прозошла ошибка: {err}")
             return []
 
-
-
-
     def _extract_experience(self, ad_json: dict) -> str | None:
         try:
             experience = ad_json.get("paramsDto", {}).get("items", [])[-1]
@@ -559,7 +548,7 @@ class AvitoParse:
             seller_info = ad_json.get("seller", {})
             seller = Seller(
                 name=seller_info.get("name", None),
-                experience = self._extract_experience(ad_json),
+                experience=self._extract_experience(ad_json),
                 characteristics=self._extract_characteristics(ad_json),
                 type="Компания" if ad_json.get("favoriteSeller", {}).get("isShop") else "Частный исполнитель",
             )
@@ -572,7 +561,9 @@ class AvitoParse:
             if seller_json:
                 item_data = seller_json.get("searchData", {}).get("profileCatalog", {})
                 try:
-                    seller.completed_ad_count = 0 if "нет" in item_data.get("items", [])[0].get("closedItemsText", "0").lower() else int(item_data.get("items", [])[0].get("closedItemsText", "0").split()[0])
+                    seller.completed_ad_count = 0 if "нет" in item_data.get("items", [])[0].get("closedItemsText",
+                                                                                                "0").lower() else int(
+                        item_data.get("items", [])[0].get("closedItemsText", "0").split()[0])
                     seller.active_ad_count = item_data.get("foundCount", 0)
                 except Exception as err:
                     seller.completed_ad_count = 0
@@ -583,7 +574,6 @@ class AvitoParse:
             logger.error(f"Ошибка при парсинге инфрмации о продавце {err}/{traceback.format_exc()}")
             return None
 
-
     async def _extract_reviews(self, ad: Item, seller_json: dict) -> tuple[str, int] | None:
         try:
             if review_data := seller_json.get("reviewsData", {}).get("entries", []):
@@ -591,7 +581,8 @@ class AvitoParse:
 
                 reviews = []
                 entries = list(filter(
-                    lambda entry: entry.get("type") == "rating" and entry.get("value", {}).get("itemTitle") == ad.title, review_data
+                    lambda entry: entry.get("type") == "rating" and entry.get("value", {}).get("itemTitle") == ad.title,
+                    review_data
                 ))
 
                 for entry in entries:
@@ -599,7 +590,7 @@ class AvitoParse:
                     review = Review(
                         text=review_entry.get("textSections")[0].get("text"),
                         author=review_entry.get("title"),
-                        score = review_entry.get("score"),
+                        score=review_entry.get("score"),
                     )
                     if review_date := dateparser.parse(review_entry.get("rated")):
                         review_date = review_date.strftime("%Y-%m-%d")
@@ -622,7 +613,6 @@ class AvitoParse:
         except Exception as err:
             logger.warning(f"Ошибка при парсинге отзывов {err}")
             return None, None
-
 
     def _extract_score(self, ad_json: dict) -> float | None:
         try:
@@ -721,6 +711,7 @@ async def main():
             logger.exception(err)
             logger.error(f"Произошла ошибка {err}. Будет повторный запуск через 30 сек.")
             time.sleep(30)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
