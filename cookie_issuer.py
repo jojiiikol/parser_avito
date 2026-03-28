@@ -41,17 +41,17 @@ class Playwright:
 
     async def issue(self):
         async with async_playwright() as p:
-            # browser = await p.chromium.launch(
-            #     headless=False,
-            #     args=[
-            #         "--disable-blink-features=AutomationControlled",
-            #         "--disable-automation",
-            #         "--disable-infobars",
-            #         "--disable-dev-shm-usage",
-            #         "--disable-browser-side-navigation",
-            #     ]
-            # )
-            browser = await p.chromium.connect_over_cdp("http://202.148.55.193:9222")
+            browser = await p.chromium.launch(
+                headless=False,
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--disable-automation",
+                    "--disable-infobars",
+                    "--disable-dev-shm-usage",
+                    "--disable-browser-side-navigation",
+                ]
+            )
+            # browser = await p.chromium.connect_over_cdp("http://202.148.55.193:9222")
             print("Connected to CDP")
 
 
@@ -85,6 +85,7 @@ class Playwright:
 
     async def get(self):
         cookies, headers = await self.issue()
+        print(cookies)
 
         for i in range(0, 500):
             print(len(cookies))
