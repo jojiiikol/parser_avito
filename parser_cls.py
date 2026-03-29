@@ -58,7 +58,7 @@ URLS = {
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/epilyaciya-ASgBAgICAkSYC6qfAaIrlPCNAw?716=10197": 50,
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/makiyazh-ASgBAgICAkSYC6qfAaIr_rcC?716=10197": 50,
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/spa_uslugi_massazh-ASgBAgICAkSYC6qfAaIrgrgC?716=10197": 50,
-    # "https://www.avito.ru/all/predlozheniya_uslug/krasota/tatu_pirsing-ASgBAgICAkSYC6qfAaIrhLgC?716=10197": 50,
+    "https://www.avito.ru/all/predlozheniya_uslug/krasota/tatu_pirsing-ASgBAgICAkSYC6qfAaIrhLgC?716=10197": 20,
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/arenda_rabochego_mesta-ASgBAgICAkSYC6qfAaIrmPCNAw?716=10197": 50,
     # "https://www.avito.ru/all/predlozheniya_uslug/krasota/drugoe-ASgBAgICAkSYC6qfAaIriLgC?716=10197": 50,
 
@@ -86,17 +86,17 @@ URLS = {
 
     # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/psihologiya-ASgBAgICAkSYC_CylQPahhb0spUD?cd=1": 50,
     # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/dietologiya-ASgBAgICAkSYC_CylQPahhbyspUD?cd=1": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/stomatologiya-ASgBAgICAkSYC_CylQPahhba3pYD?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorovye/podologiya-ASgBAgICAkSYC_CylQPahhbc3pYD?cd=1": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/zdorove/drugoe-ASgBAgICAkSYC_CylQPahhbe3pYD?cd=1": 4,
-
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_garazhej_bani_verand-ASgBAgICAkSYC6Cf8QLejw~cn_EC?716=3024848": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/otdelka_derevyannyh_domov-ASgBAgICAkSYC6Cf8QLejw_ckIcD?716=3024848": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kladochnye_raboty-ASgBAgICAkSYC6Cf8QLejw_snYsD?716=3024848": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/krovelnye_raboty-ASgBAgICAkSYC6Cf8QLejw_0nYsD?716=3024848": 20,
-    "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/svarka_kovka_metallokonstrukcii-ASgBAgICAkSYC6Cf8QLejw_6nYsD?716=3024848": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/fitnes_joga-ASgBAgICAkSYC_CylQPahhb2spUD?cd=1": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/stomatologiya-ASgBAgICAkSYC_CylQPahhba3pYD?cd=1": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/zdorovye/podologiya-ASgBAgICAkSYC_CylQPahhbc3pYD?cd=1": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/zdorove/drugoe-ASgBAgICAkSYC_CylQPahhbe3pYD?cd=1": 4,
+    #
+    # "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_domov_pod_klyuch-ASgBAgICAkSYC6Cf8QLejw_~nYsD?716=3024848": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/stroitelstvo_garazhej_bani_verand-ASgBAgICAkSYC6Cf8QLejw~cn_EC?716=3024848": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/otdelka_derevyannyh_domov-ASgBAgICAkSYC6Cf8QLejw_ckIcD?716=3024848": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kladochnye_raboty-ASgBAgICAkSYC6Cf8QLejw_snYsD?716=3024848": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/krovelnye_raboty-ASgBAgICAkSYC6Cf8QLejw_0nYsD?716=3024848": 20,
+    # "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/svarka_kovka_metallokonstrukcii-ASgBAgICAkSYC6Cf8QLejw_6nYsD?716=3024848": 20,
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/fundamentnye_i_betonnye_raboty-ASgBAgICAkSYC6Cf8QLejw~CnosD?716=3024848": 20,
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/almaznoe_sverlenie_i_rezka-ASgBAgICAkSYC6Cf8QLejw_unYsD?716=3024848": 20,
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/snos_i_demontazh-ASgBAgICAkSYC6Cf8QLejw_8nYsD?716=3024848": 20,
@@ -109,24 +109,24 @@ URLS = {
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/kommercheskoe_stroitelstvo-ASgBAgICAkSYC6Cf8QLejw~AkZoD?716=3024848": 20,
     "https://www.avito.ru/all/predlozheniya_uslug/stroitelstvo/drugoe-ASgBAgICAkSYC6Cf8QLejw~EnosD?716=3024848": 20,
 
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/televizor-ASgBAgICAkSYC7T3Ad4V2vcB?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/mobilnyye_ustroystva-ASgBAgICAkSYC7T3Ad4V4vcB?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/foto_audio_videotekhnika-ASgBAgICAkSYC7T3Ad4V5vcB?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kondicionery_i_ventilyaciya-ASgBAgICAkSYC7T3Ad4V0qCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/stiralnye_syshilnye_mashiny-ASgBAgICAkSYC7T3Ad4V1KCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/posudomoechnye_mashiny-ASgBAgICAkSYC7T3Ad4V1qCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/holodilniki_i_morozilnye_kamery-ASgBAgICAkSYC7T3Ad4V2KCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kuhonnye_plity_varochnye_paneli-ASgBAgICAkSYC7T3Ad4V2qCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/gazovye_kotly_vodonagrevateli-ASgBAgICAkSYC7T3Ad4V3KCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kofemashiny-ASgBAgICAkSYC7T3Ad4V3qCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/shvejnyemashiny_overloki-ASgBAgICAkSYC7T3Ad4V4KCOAw?716=15834": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/drugoe-ASgBAgICAkSYC7T3Ad4V7KCOAw?716=15834": 10,
-    #
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/televizor-ASgBAgICAkSYC7T3Ad4V2vcB?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/mobilnyye_ustroystva-ASgBAgICAkSYC7T3Ad4V4vcB?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/foto_audio_videotekhnika-ASgBAgICAkSYC7T3Ad4V5vcB?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kondicionery_i_ventilyaciya-ASgBAgICAkSYC7T3Ad4V0qCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/stiralnye_syshilnye_mashiny-ASgBAgICAkSYC7T3Ad4V1KCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/posudomoechnye_mashiny-ASgBAgICAkSYC7T3Ad4V1qCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/holodilniki_i_morozilnye_kamery-ASgBAgICAkSYC7T3Ad4V2KCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kuhonnye_plity_varochnye_paneli-ASgBAgICAkSYC7T3Ad4V2qCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/gazovye_kotly_vodonagrevateli-ASgBAgICAkSYC7T3Ad4V3KCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/kofemashiny-ASgBAgICAkSYC7T3Ad4V3qCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/shvejnyemashiny_overloki-ASgBAgICAkSYC7T3Ad4V4KCOAw?716=15834": 20,
+    "https://www.avito.ru/all/predlozheniya_uslug/remont_i_obsluzhivanie_tehniki/drugoe-ASgBAgICAkSYC7T3Ad4V7KCOAw?716=15834": 20,
+
     # # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/izgotovlenie_klyuchej_i_zatochka-ASgBAgICAkSYC7CfAZwL4p8B?cd=1": 100,
     # # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/poshiv_i_remont_odezhdy-ASgBAgICAkSYC7CfAZwL5p8B?cd=1": 100,
-    # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/remont_chasov-ASgBAgICAkSYC7CfAZwL6p8B?cd=1": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/himchistka_stirka-ASgBAgICAkSYC7CfAZwL8p8B?cd=1": 10,
-    # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 10
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/remont_chasov-ASgBAgICAkSYC7CfAZwL6p8B?cd=1": 10,
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/himchistka_stirka-ASgBAgICAkSYC7CfAZwL8p8B?cd=1": 10,
+    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 10
 }
 
 
