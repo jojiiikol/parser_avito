@@ -126,7 +126,7 @@ URLS = {
     # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/poshiv_i_remont_odezhdy-ASgBAgICAkSYC7CfAZwL5p8B?cd=1": 50,
     # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/remont_chasov-ASgBAgICAkSYC7CfAZwL6p8B?cd=1": 50,
     # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/himchistka_stirka-ASgBAgICAkSYC7CfAZwL8p8B?cd=1": 50,
-    "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 50
+    # "https://www.avito.ru/all/predlozheniya_uslug/bytovye_uslugi/yuvelirnye_uslugi-ASgBAgICAkSYC7CfAZwL9J8B?cd=1": 50
 }
 
 
