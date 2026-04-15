@@ -209,7 +209,7 @@ class AvitoParse:
                     link_index=_index
                 )
 
-            first_page = await self.fetch_data(url=url)
+            first_page = await self.fetch_data(url=url + "s=104")
             html_page_count = self._extract_page_count(html_code=first_page)
             logger.info(f"Найдено {html_page_count} страниц")
 
