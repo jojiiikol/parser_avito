@@ -226,7 +226,7 @@ class AvitoParse:
                     if DEBUG_MODE:
                         html_code = open("may.txt", "r", encoding="utf-8").read()
                     else:
-                        url += "s=104"
+                        url += "&s=104"
                         html_code = await self.fetch_data(url=url)
                 else:
                     html_code = first_page
